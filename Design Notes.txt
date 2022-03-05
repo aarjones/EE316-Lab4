@@ -1,0 +1,30 @@
+ToDo:
+	Write Hangman Program in Java
+		Backend for this piece, not the GUI.
+		Take in word, then characters.
+		Keep integer count of the number of mistakes.
+		Print out the updated String each time correct character is guessed
+	Java GUI
+		Instantiate a hangman object, and run it using a gui
+		Should all the user to type in characters, have them appear as either correct or incorrect
+		Button for start over/reset
+		Start game, type in custom word (up to 16 characters due to LCD)
+		Launcher allows to choose which com port to run off of
+			Perhaps with a drop-down (comboBox?)
+	PC-FPGA Communications
+		PC-Side:	
+			Interrupt-based listener. Always wait for input from the FPGA when the game is running
+			Send all 32 characters of the LCD back to the FPGA once received something
+			Using this Java Package: https://fazecast.github.io/jSerialComm/
+		FPGA-Side:
+			Send single character from the keyboard whenever it is received.
+			Be ready to accept 32 characters from the PC basically whenever (after sending and otherwise, since game start/end, etc.
+	Keyboard
+		Get PS2 keyboard working with the FPGA.
+		Send character to PC after release
+			Sequence: Pressed - Released >>> SCAN_CODE - 0F, SCAN_CODE
+
+In-Progress:
+
+
+Completed:
