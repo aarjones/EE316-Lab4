@@ -25,7 +25,7 @@ public class MainWindow extends Application {
     /**
      * The default height of the window
      */
-    public static final int DEFAULT_WIDTH = 1200;
+    public static final int DEFAULT_WIDTH = 400;
     /**
      * The default width of the window
      */
@@ -61,6 +61,10 @@ public class MainWindow extends Application {
      */
     private ImageView hangmanImageView;
     /**
+     * The VBox where the Image will be placed
+     */
+    private StackPane hangmanBox;
+    /**
      * A button used to reset this hangman object
      */
     private Button resetButton;
@@ -79,7 +83,7 @@ public class MainWindow extends Application {
         final int SCREEN_HEIGHT = (int)screenBounds.getHeight();
 
         //Set up the sizing of the GUI's grid
-        int colCount = 6;
+        int colCount = 4;
         int rowCount = 6;
         RowConstraints rc = new RowConstraints();
         rc.setPercentHeight(100d / rowCount);
@@ -88,6 +92,7 @@ public class MainWindow extends Application {
 
         //Make a grid to place the other items
         GridPane grid = new GridPane();
+        grid.setGridLinesVisible(false);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
@@ -102,34 +107,50 @@ public class MainWindow extends Application {
 
         //Set up the bad guesses field
         this.badGuesses = new TextField();
-        this.badGuesses.setPrefHeight(SCREEN_HEIGHT * 0.5);
-        this.badGuesses.setPrefWidth(SCREEN_WIDTH * 5/6d);
+        this.badGuesses.setPrefHeight(SCREEN_HEIGHT / 6d);
+        this.badGuesses.setPrefWidth(SCREEN_WIDTH * 3/4d);
         this.badGuesses.setEditable(false);
-        this.badGuesses.setStyle("-fx-font-family: 'monospaced';-fx-control-inner-background: #222222; -fx-text-fill: white;");
+        this.badGuesses.setText("Bad characters...");
+        this.badGuesses.setStyle("-fx-font-family: 'monospaced';-fx-control-inner-background: #222222; -fx-text-fill: white; -fx-font-size: 15pt;");
 
         //Set up the current word field
         this.currentText = new TextField();
-        this.currentText.setPrefHeight(SCREEN_HEIGHT * 0.5);
-        this.currentText.setPrefWidth(SCREEN_WIDTH * 5/6d);
+        this.currentText.setPrefHeight(SCREEN_HEIGHT / 6d);
+        this.currentText.setPrefWidth(SCREEN_WIDTH * 3/4d);
         this.currentText.setEditable(false);
-        this.currentText.setStyle("-fx-font-family: 'monospaced';-fx-control-inner-background: #222222; -fx-text-fill: white;");
+        this.currentText.setText("Current word...");
+        this.currentText.setStyle("-fx-font-family: 'monospaced';-fx-control-inner-background: #222222; -fx-text-fill: white; -fx-font-size: 15pt;");
 
         //Set up the remaining guesses field
         this.remainingGuesses = new TextField();
         this.remainingGuesses.setPrefHeight(SCREEN_HEIGHT / 6d);
-        this.remainingGuesses.setPrefWidth(SCREEN_WIDTH / 6d);
+        this.remainingGuesses.setPrefWidth(SCREEN_WIDTH / 4d);
         this.remainingGuesses.setEditable(false);
-        this.remainingGuesses.setStyle("-fx-font-family: 'monospaced';-fx-control-inner-background: #222222; -fx-text-fill: white;");
+        this.remainingGuesses.setText("# guesses");
+        this.remainingGuesses.setStyle("-fx-font-family: 'monospaced';-fx-control-inner-background: #222222; -fx-text-fill: white; -fx-font-size: 15pt;");
 
         //Set up the tmp hangman photo
         this.hangmanImageView = new ImageView(new Image("file:./res/hangman_tmp.png"));
+        this.hangmanImageView.setTranslateY(30);
         this.hangmanImageView.setPreserveRatio(false);
-        this.hangmanImageView.setFitHeight(windowHeight * 4/6d);
-        this.hangmanImageView.setFitWidth(windowWidth / 6d);
+        this.hangmanImageView.setFitHeight(windowHeight * 3/7d);
+
+        ImageView hangmanGallows = new ImageView(new Image("file:./res/gallows.png"));
+        hangmanGallows.setPreserveRatio(false);
+        hangmanGallows.setFitWidth(windowWidth * 5/6d);
+        hangmanGallows.setFitHeight(windowHeight * 4/7d);
+
+        //Set up StackPane for hangman
+        this.hangmanBox = new StackPane();
+        this.hangmanBox.getChildren().add(hangmanGallows);
+        this.hangmanBox.getChildren().add(this.hangmanImageView);
+        this.hangmanBox.setAlignment(Pos.CENTER_LEFT);
+        this.hangmanBox.setPrefHeight(SCREEN_HEIGHT * 4/6d);
+        this.hangmanBox.setPrefWidth(SCREEN_WIDTH);
 
         //Set up the reset button
         resetButton = new Button("Reset");
-        resetButton.setPrefWidth(SCREEN_WIDTH / 6d);
+        resetButton.setPrefWidth(SCREEN_WIDTH / 4d);
         resetButton.setPrefHeight(SCREEN_HEIGHT / 6d);
         resetButton.setStyle("-fx-background-color: #222222; -fx-text-fill: white;");
 
@@ -140,26 +161,27 @@ public class MainWindow extends Application {
             grid.getColumnConstraints().add(cc);
 
         //Add things to the grid
-        grid.add(this.currentText, 0, 3, 5, 3);
-        grid.add(this.badGuesses, 0, 0, 5, 3);
-        grid.add(this.remainingGuesses, 5, 0, 1, 1);
-        grid.add(this.hangmanImageView, 5, 1, 1, 4);
-        grid.add(this.resetButton, 5, 5, 1, 1);
+        grid.add(this.badGuesses, 0, 0, 3, 1);
+        grid.add(this.remainingGuesses, 3, 0, 1, 1);
+        grid.add(this.hangmanBox, 0, 1, colCount, 4);
+        grid.add(this.currentText, 0, 5, 3, 1);
+        grid.add(this.resetButton, 3, 5, 1, 1);
 
         //Set up the scene
         Scene scene = new Scene(grid, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        scene.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                windowWidth = newValue.intValue();
-                hangmanImageView.setFitWidth(windowWidth / 6d);
-            }
-        });
         scene.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 windowHeight = newValue.intValue();
-                hangmanImageView.setFitHeight(windowHeight * 4/6d);
+                hangmanImageView.setFitHeight(windowHeight * 3/6d);
+                hangmanGallows.setFitHeight(windowHeight * 4/7d);
+            }
+        });
+        scene.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                windowWidth = newValue.intValue();
+                hangmanGallows.setFitWidth(windowWidth * 5/6d);
             }
         });
 
