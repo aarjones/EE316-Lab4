@@ -2,6 +2,7 @@ package gui;
 
 import com.fazecast.jSerialComm.SerialPort;
 import comports.comInterface;
+import exceptions.CharacterAlreadyGuessedException;
 import hangman.Hangman;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -23,6 +24,7 @@ import javafx.scene.paint.Stop;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import test.TestMainWindow;
 
 public class MainWindow extends Application {
     /* **************** PUBLIC VARS **************** */
@@ -53,6 +55,14 @@ public class MainWindow extends Application {
      */
     private comInterface comPort;
     /**
+     * The number of games played
+     */
+    private int numGames;
+    /**
+     * The number of wins
+     */
+    private int numWins;
+    /**
      * A TextField where the current text will be shown.
      */
     private TextField currentText;
@@ -78,8 +88,17 @@ public class MainWindow extends Application {
      */
     public MainWindow(String portDescriptor, int baud, int numBadGuesses) {
         this.comPort = new comInterface(portDescriptor, baud);
-
         this.hangman = new Hangman("TMP_KEY", numBadGuesses);
+        this.numGames = 0;
+        this.numWins = 0;
+    }
+
+    /**
+     * Allows us to run just this file.
+     */
+    public MainWindow() {
+        this.comPort = null;
+        this.hangman = new Hangman("TMPKEY", 6);
     }
 
     /**
@@ -119,28 +138,13 @@ public class MainWindow extends Application {
         )));
 
         //Set up the bad guesses field
-        this.badGuesses = new TextField();
-        this.badGuesses.setPrefHeight(SCREEN_HEIGHT / 6d);
-        this.badGuesses.setPrefWidth(SCREEN_WIDTH * 3/4d);
-        this.badGuesses.setEditable(false);
-        this.badGuesses.setText("Bad characters...");
-        this.badGuesses.setStyle("-fx-font-family: 'monospaced';-fx-control-inner-background: #222222; -fx-text-fill: white; -fx-font-size: 15pt;");
+        this.badGuesses = makeTextField("Bad characters...", false);
 
         //Set up the current word field
-        this.currentText = new TextField();
-        this.currentText.setPrefHeight(SCREEN_HEIGHT / 6d);
-        this.currentText.setPrefWidth(SCREEN_WIDTH * 3/4d);
-        this.currentText.setEditable(false);
-        this.currentText.setText("Current word...");
-        this.currentText.setStyle("-fx-font-family: 'monospaced';-fx-control-inner-background: #222222; -fx-text-fill: white; -fx-font-size: 15pt;");
+        this.currentText = makeTextField("Current word...", false);
 
         //Set up the remaining guesses field
-        this.remainingGuesses = new TextField();
-        this.remainingGuesses.setPrefHeight(SCREEN_HEIGHT / 6d);
-        this.remainingGuesses.setPrefWidth(SCREEN_WIDTH / 4d);
-        this.remainingGuesses.setEditable(false);
-        this.remainingGuesses.setText("# guesses");
-        this.remainingGuesses.setStyle("-fx-font-family: 'monospaced';-fx-control-inner-background: #222222; -fx-text-fill: white; -fx-font-size: 15pt;");
+        this.remainingGuesses = makeTextField("# Guesses", false);
 
         //Set up the tmp hangman photo
         this.hangmanImageView = new ImageView(new Image("file:./res/hangman_tmp.png"));
@@ -191,19 +195,79 @@ public class MainWindow extends Application {
             }
         });
 
+        scene.getStylesheets().add("file:./src/resources/main-style.css");
+
         //Show the program
         primaryStage.setTitle("Hangman");
         primaryStage.getIcons().add(new Image("file:./res/icon1.png"));
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        updateFields();
+
         //Handle closing
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
-                comPort.closePort();
+                if (comPort != null)
+                    comPort.closePort();
             }
         });
+
+        /*
+        Run the test script on a second thread
+        This is very similar to how I expect to get input from the FPGA--start a second thread which uses MainWindow's guessLetter() function
+        */
+        new Thread(new TestMainWindow(this)).start();
+    }
+
+    /**
+     * Guess a letter using this Hangman object
+     *
+     * @param c The letter to guess
+     * @throws CharacterAlreadyGuessedException An exception thrown if the user tries to guess the same exception twice.
+     */
+    public void guessLetter(char c) throws CharacterAlreadyGuessedException {
+        this.hangman.checkLetter(c);
+        updateFields();
+    }
+
+    /**
+     * Update all of the MainWindow's fields
+     */
+     private void updateFields() {
+        //Update each TextField
+        this.remainingGuesses.setText(Integer.toString(this.hangman.getRemainingGuesses()));
+        this.badGuesses.setText(this.hangman.getBadGuesses());
+        this.currentText.setText(this.hangman.getCurrentText());
+
+        //hang the man here
+        switch(this.hangman.getRemainingGuesses()) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            default:
+                break;
+        }
+
+        //Handle if the game is over
+     }
+
+    /**
+     * Build a TextField
+     *
+     * @param text The default text to display on the TextField
+     * @param editable Should this TextField be editable?
+     * @return A TextField with the given parameters.
+     */
+    private static TextField makeTextField(String text, boolean editable) {
+        TextField toReturn = new TextField(text);
+        toReturn.setEditable(editable);
+        return toReturn;
     }
 
     /**

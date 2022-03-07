@@ -1,0 +1,9 @@
+.text-field {
+    -fx-font-family: 'monospaced';
+    -fx-control-inner-background: transparent;
+    -fx-text-box-border: transparent;
+    -fx-alignment: center;
+    -fx-text-fill: white;
+    -fx-font-size: 24pt;
+    -fx-focus-traversable: false;
+}

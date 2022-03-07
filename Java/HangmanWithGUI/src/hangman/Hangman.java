@@ -137,8 +137,21 @@ public class Hangman {
         return new String(this.currentText);
     }
 
-    public ArrayList<Character> getBadGuesses() {
-        return this.badCharacters;
+    /**
+     * Gets a list of all the bad characters guessed
+     *
+     * @return an ArrayList with every bad character guessed
+     */
+    public String getBadGuesses() {
+        StringBuilder toReturn = new StringBuilder();
+        for(Character c : this.badCharacters)
+            toReturn.append(c).append(" ");
+
+        return toReturn.toString();
+    }
+
+    public int getRemainingGuesses() {
+        return this.maxIncGuesses - this.incorrectGuesses;
     }
 
     /**

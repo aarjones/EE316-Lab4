@@ -163,18 +163,39 @@ public class LoginWindow extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Builds a TextField
+     *
+     * @param text The default text of the TextField
+     * @param editable Should the TextField be editable?
+     * @return A new TextField with the given parameters
+     */
     private static TextField makeTextField(String text, boolean editable) {
         TextField toReturn = new TextField(text);
         toReturn.setEditable(editable);
         return toReturn;
     }
 
+    /**
+     * Builds a Label
+     *
+     * @param label The text to show on the Label
+     * @return A new Label with the given parameters
+     */
     private static Label makeLabel(String label) {
         Label toReturn = new Label(label);
         toReturn.setAlignment(Pos.TOP_CENTER);
         return toReturn;
     }
 
+    /**
+     * Builds a Button
+     *
+     * @param label The text to show on the button
+     * @param width The width of the button
+     * @param height The height of the button
+     * @return A new Button with the given parameters
+     */
     private static Button makeButton(String label, int width, int height) {
         Button toReturn = new Button(label);
         toReturn.setPrefHeight(height);
