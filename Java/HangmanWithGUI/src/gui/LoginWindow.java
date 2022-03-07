@@ -2,6 +2,8 @@ package gui;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -47,6 +49,14 @@ public class LoginWindow extends Application {
      * A button to start the game.
      */
     private Button startButton;
+    /**
+     * A TextField where the user can select a baud rate
+     */
+    private TextField baudField;
+    /**
+     * A TextField where the user can select a baud rate
+     */
+    private TextField badGuesses;
 
     /**
      * Launches the Login Window.
@@ -89,14 +99,28 @@ public class LoginWindow extends Application {
 
         //Set up the baudRate TextField and VBox
         rows[2].getChildren().add(makeLabel("Select a baud rate:"));
-        rows[2].getChildren().add(makeTextField("9600", true));
+        this.baudField = makeTextField("9600", true);
+        rows[2].getChildren().add(this.baudField);
 
         //Set up the badGuesses TextField
         rows[3].getChildren().add(makeLabel("Maximum Number of Bad Guesses:"));
-        rows[3].getChildren().add(makeTextField("6", true));
+        this.badGuesses = makeTextField("6", true);
+        rows[3].getChildren().add(this.badGuesses);
 
         //Set up the start Button
         this.startButton = makeButton("Start Game", SCREEN_WIDTH, SCREEN_HEIGHT);
+        this.startButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                MainWindow window = new MainWindow(comPorts.getValue(), Integer.parseInt(baudField.getText()),  Integer.parseInt(badGuesses.getText()));
+                try {
+                    window.start(new Stage());
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
+                primaryStage.close();
+            }
+        });
 
         //add it to a VBox
         rows[4].getChildren().add(this.startButton);

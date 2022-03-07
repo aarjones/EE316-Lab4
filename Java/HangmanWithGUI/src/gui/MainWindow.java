@@ -1,9 +1,12 @@
 package gui;
 
+import com.fazecast.jSerialComm.SerialPort;
+import comports.comInterface;
 import hangman.Hangman;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -19,6 +22,7 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class MainWindow extends Application {
     /* **************** PUBLIC VARS **************** */
@@ -45,6 +49,10 @@ public class MainWindow extends Application {
      */
     private Hangman hangman;
     /**
+     * The SerialPort through which the game will communicate
+     */
+    private comInterface comPort;
+    /**
      * A TextField where the current text will be shown.
      */
     private TextField currentText;
@@ -64,6 +72,15 @@ public class MainWindow extends Application {
      * The VBox where the Image will be placed
      */
     private StackPane hangmanBox;
+
+    /**
+     * Used to import Hangman paramters
+     */
+    public MainWindow(String portDescriptor, int baud, int numBadGuesses) {
+        this.comPort = new comInterface(portDescriptor, baud);
+
+        this.hangman = new Hangman("TMP_KEY", numBadGuesses);
+    }
 
     /**
      * Starts the Hangman GUI
@@ -179,6 +196,13 @@ public class MainWindow extends Application {
         primaryStage.getIcons().add(new Image("file:./res/icon1.png"));
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                comPort.closePort();
+            }
+        });
     }
 
     /**
