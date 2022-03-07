@@ -1,0 +1,39 @@
+
+
+.text-field {
+    -fx-font-family: 'monospaced';
+    -fx-control-inner-background: #222222;
+    -fx-text-fill: white;
+    -fx-font-size: 12pt;
+}
+
+.label {
+    -fx-font-family: 'monospaced';
+    -fx-control-inner-background: #222222;
+    -fx-text-fill: white;
+    -fx-font-size: 13pt;
+}
+
+.program-title {
+    -fx-font-size: 24pt;
+    -fx-font-weight: bold;
+}
+
+.combo-box {
+    -fx-font-family: 'monospaced';
+    -fx-background-color: #222222;
+    -fx-control-inner-background: #222222;
+    -fx-text-fill: white;
+    -fx-font-size: 12pt;
+}
+
+.combo-box .cell:selected {
+    -fx-text-fill: white;
+}
+
+.button {
+    -fx-font-family: 'monospaced';
+    -fx-background-color: #222222;
+    -fx-text-fill: white;
+    -fx-font-size: 12pt;
+}

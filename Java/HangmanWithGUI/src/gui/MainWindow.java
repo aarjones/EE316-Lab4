@@ -64,10 +64,6 @@ public class MainWindow extends Application {
      * The VBox where the Image will be placed
      */
     private StackPane hangmanBox;
-    /**
-     * A button used to reset this hangman object
-     */
-    private Button resetButton;
 
     /**
      * Starts the Hangman GUI
@@ -148,12 +144,6 @@ public class MainWindow extends Application {
         this.hangmanBox.setPrefHeight(SCREEN_HEIGHT * 4/6d);
         this.hangmanBox.setPrefWidth(SCREEN_WIDTH);
 
-        //Set up the reset button
-        resetButton = new Button("Reset");
-        resetButton.setPrefWidth(SCREEN_WIDTH / 4d);
-        resetButton.setPrefHeight(SCREEN_HEIGHT / 6d);
-        resetButton.setStyle("-fx-background-color: #222222; -fx-text-fill: white;");
-
         //Add constraints to the grid
         for(int i = 0; i < rowCount; i++)
             grid.getRowConstraints().add(rc);
@@ -164,8 +154,7 @@ public class MainWindow extends Application {
         grid.add(this.badGuesses, 0, 0, 3, 1);
         grid.add(this.remainingGuesses, 3, 0, 1, 1);
         grid.add(this.hangmanBox, 0, 1, colCount, 4);
-        grid.add(this.currentText, 0, 5, 3, 1);
-        grid.add(this.resetButton, 3, 5, 1, 1);
+        grid.add(this.currentText, 0, 5, 4, 1);
 
         //Set up the scene
         Scene scene = new Scene(grid, DEFAULT_WIDTH, DEFAULT_HEIGHT);

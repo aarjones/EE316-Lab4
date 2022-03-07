@@ -11,6 +11,10 @@ ToDo:
 		Start game, type in custom word (up to 16 characters due to LCD)
 		Launcher allows to choose which com port to run off of
 			Perhaps with a drop-down (comboBox?)
+	LCD:
+		Adapted the I2C LCD to take in 32 characters to display
+	7-seg:
+		Apparently this needs to show the number of guesses remaining.  Can this not be on the LCD?
 	PC-FPGA Communications
 		PC-Side:	
 			Interrupt-based listener. Always wait for input from the FPGA when the game is running
