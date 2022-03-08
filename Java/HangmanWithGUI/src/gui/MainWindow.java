@@ -1,7 +1,6 @@
 package gui;
 
-import com.fazecast.jSerialComm.SerialPort;
-import comports.comInterface;
+import comports.ComInterface;
 import exceptions.CharacterAlreadyGuessedException;
 import hangman.Hangman;
 import javafx.application.Application;
@@ -12,7 +11,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -53,7 +51,7 @@ public class MainWindow extends Application {
     /**
      * The SerialPort through which the game will communicate
      */
-    private comInterface comPort;
+    private ComInterface comPort;
     /**
      * The number of games played
      */
@@ -84,13 +82,34 @@ public class MainWindow extends Application {
     private StackPane hangmanBox;
 
     /**
-     * Used to import Hangman paramters
+     * Create a new MainWindow, maintaining all COM parameters and game statistics.
+     *
+     * @param portDescriptor The portDescriptor of the COM port to use in this game
+     * @param baud The baud rate to use for the COM port
+     * @param numBadGuesses The maximum number of bad games allowed per game
+     * @param numWins The number of wins so far
+     * @param numGames The number of games played so far
      */
-    public MainWindow(String portDescriptor, int baud, int numBadGuesses) {
-        this.comPort = new comInterface(portDescriptor, baud);
+    public MainWindow(String portDescriptor, int baud, int numBadGuesses, int numWins, int numGames) {
+        this.comPort = new ComInterface(portDescriptor, baud);
         this.hangman = new Hangman("TMP_KEY", numBadGuesses);
-        this.numGames = 0;
-        this.numWins = 0;
+        this.numGames = numGames;
+        this.numWins = numWins;
+    }
+
+    /**
+     * Create a new MainWindow, maintaining all COM parameters and game statistics
+     *
+     * @param comPort The ComInterface used by this game
+     * @param numBadGuesses The maximum number of bad guesses per game
+     * @param numWins The number of wins so far
+     * @param numGames The number of games played so far
+     */
+    public MainWindow(ComInterface comPort, int numBadGuesses, int numWins, int numGames) {
+        this.comPort = comPort;
+        this.hangman = new Hangman("TMP_KEY", numBadGuesses);
+        this.numGames = numWins;
+        this.numWins = numGames;
     }
 
     /**
@@ -255,6 +274,13 @@ public class MainWindow extends Application {
         }
 
         //Handle if the game is over
+         if(this.hangman.gameOver()) {
+             if(this.hangman.isSolved()) {
+                 //win
+             } else {
+                 //loss
+             }
+         }
      }
 
     /**
