@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Tue Mar  8 15:38:46 2022
+# Process ID: 3948
+# Current directory: C:/Users/herendjb/project_4/project_4.runs/synth_2
+# Command line: vivado.exe -log ps2_keyboard_to_ascii.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source ps2_keyboard_to_ascii.tcl
+# Log file: C:/Users/herendjb/project_4/project_4.runs/synth_2/ps2_keyboard_to_ascii.vds
+# Journal file: C:/Users/herendjb/project_4/project_4.runs/synth_2\vivado.jou
+#-----------------------------------------------------------
+source ps2_keyboard_to_ascii.tcl -notrace
