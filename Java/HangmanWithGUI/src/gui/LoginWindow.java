@@ -21,9 +21,7 @@ import javafx.scene.paint.Stop;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import javax.xml.soap.Text;
-
-import static comports.comInterface.getComPorts;
+import static comports.ComInterface.getComPorts;
 
 public class LoginWindow extends Application {
     /* **************** PUBLIC VARS **************** */
@@ -112,7 +110,7 @@ public class LoginWindow extends Application {
         this.startButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                MainWindow window = new MainWindow(comPorts.getValue(), Integer.parseInt(baudField.getText()),  Integer.parseInt(badGuesses.getText()));
+                NewGameWindow window = new NewGameWindow(comPorts.getValue(), Integer.parseInt(baudField.getText()), 0, 0, Integer.parseInt(badGuesses.getText()), false);
                 try {
                     window.start(new Stage());
                 } catch (Exception e) {
