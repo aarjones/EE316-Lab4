@@ -1,6 +1,7 @@
 package test;
 
 import gui.NewGameWindow;
+import javafx.application.Platform;
 
 public class TestNewGameWindow implements Runnable {
     private static final int TIME = 2000;
@@ -15,7 +16,12 @@ public class TestNewGameWindow implements Runnable {
     public void run() {
         try {
             Thread.sleep(TIME);
-            this.window.commandPressed('Y');
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    window.commandPressed('Y');
+                }
+            });
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -237,7 +237,7 @@ public class MainWindow extends Application {
         Run the test script on a second thread
         This is very similar to how I expect to get input from the FPGA--start a second thread which uses MainWindow's guessLetter() function
         */
-        new Thread(new TestMainWindow(this)).start();
+        //new Thread(new TestMainWindow(this)).start();
     }
 
     /**

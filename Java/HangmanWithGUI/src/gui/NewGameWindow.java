@@ -145,7 +145,7 @@ public class NewGameWindow extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        new Thread(new TestNewGameWindow(this)).start();
+        //new Thread(new TestNewGameWindow(this)).start();
     }
 
     /**
@@ -160,6 +160,11 @@ public class NewGameWindow extends Application {
         return toReturn;
     }
 
+    /**
+     * A command key has been pressed
+     *
+     * @param c The character pressed.
+     */
     public void commandPressed(char c) {
         if(c == 'Y') {
             MainWindow window = new MainWindow(this.comPort, this.numBadGuesses, this.numWins, this.numGames);
@@ -169,8 +174,13 @@ public class NewGameWindow extends Application {
                 System.err.println(e.getMessage());
             }
             this.primaryStage.close();
-        } else {
-            //end the games
+        } else if(c == 'N') {
+            GameOverWindow window = new GameOverWindow(this.comPort, this.numBadGuesses, this.numWins, this.numGames);
+            try {
+                window.start(new Stage());
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 
