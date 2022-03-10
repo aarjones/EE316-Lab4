@@ -92,7 +92,7 @@ public class MainWindow extends Window {
      */
     public MainWindow(String portDescriptor, int baud, HangmanStats gameStats) {
         this.comPort = new ComInterface(portDescriptor, baud);
-        this.hangman = new Hangman("TMP_KEY", gameStats.getMaxGuesses());
+        this.hangman = new Hangman(gameStats.getNewKey(), gameStats.getMaxGuesses());
         this.gameStats = gameStats;
     }
 
@@ -104,7 +104,7 @@ public class MainWindow extends Window {
      */
     public MainWindow(ComInterface comPort, HangmanStats gameStats) {
         this.comPort = comPort;
-        this.hangman = new Hangman("TMPKEY", gameStats.getMaxGuesses());
+        this.hangman = new Hangman(gameStats.getNewKey(), gameStats.getMaxGuesses());
         this.gameStats = gameStats;
     }
 
@@ -113,8 +113,8 @@ public class MainWindow extends Window {
      */
     public MainWindow() {
         this.comPort = new ComInterface(); //runs on System.in and System.out
-        this.hangman = new Hangman("TMPKEY", 6);
-        this.gameStats = new HangmanStats(6, 0, 0, false, "TMPKEY");
+        this.gameStats = new HangmanStats(6, 0, 0, false, "");
+        this.hangman = new Hangman(this.gameStats.getNewKey(), 6);
 
         this.comPort.updateWindow(this);
         new Thread(this.comPort).start();
@@ -310,7 +310,6 @@ public class MainWindow extends Window {
              } catch (Exception e) {
                  e.printStackTrace();
              }
-             //this.stage.close();
          }
      }
 
