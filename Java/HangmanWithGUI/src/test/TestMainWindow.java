@@ -16,26 +16,24 @@ public class TestMainWindow implements Runnable {
     public void run() {
         try {
             Thread.sleep(TIME);
-            this.window.guessLetter('A');
+            this.window.keyPressed('A');
             Thread.sleep(TIME);
-            this.window.guessLetter('T');
+            this.window.keyPressed('T');
             Thread.sleep(TIME);
-            this.window.guessLetter('B');
+            this.window.keyPressed('B');
             Thread.sleep(TIME);
-            this.window.guessLetter('E');
+            this.window.keyPressed('E');
             Thread.sleep(TIME);
-            this.window.guessLetter('P');
+            this.window.keyPressed('P');
             Thread.sleep(TIME);
-            this.window.guessLetter('M');
+            this.window.keyPressed('M');
             Thread.sleep(TIME);
-            this.window.guessLetter('C');
+            this.window.keyPressed('C');
             Thread.sleep(TIME);
-            this.window.guessLetter('K');
+            this.window.keyPressed('K');
             Thread.sleep(TIME);
-            this.window.guessLetter('Y');
+            this.window.keyPressed('Y');
             Thread.sleep(TIME);
-        } catch (CharacterAlreadyGuessedException e) {
-            e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

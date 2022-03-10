@@ -19,7 +19,7 @@ public class TestNewGameWindow implements Runnable {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    window.commandPressed('Y');
+                    window.keyPressed('Y');
                 }
             });
         } catch (InterruptedException e) {

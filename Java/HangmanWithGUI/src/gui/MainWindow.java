@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import test.TestMainWindow;
 
-public class MainWindow extends Application {
+public class MainWindow extends Window {
     /* **************** PUBLIC VARS **************** */
     /**
      * The default height of the window
@@ -241,18 +241,22 @@ public class MainWindow extends Application {
     }
 
     /**
-     * Guess a letter using this Hangman object
+     * A key has been pressed.  Used to guess letters using the Hangman object.
      *
      * @param c The letter to guess
      * @throws CharacterAlreadyGuessedException An exception thrown if the user tries to guess the same exception twice.
      */
-    public void guessLetter(char c) throws CharacterAlreadyGuessedException {
-        this.hangman.checkLetter(c);
-        updateFields();
+    public void keyPressed(char c) {
+        try {
+            this.hangman.checkLetter(c);
+            updateFields();
+        } catch(CharacterAlreadyGuessedException cag) {
+            //ignore this character/do nothing
+        }
     }
 
     /**
-     * Update all of the MainWindow's fields
+     * Update all of MainWindow's fields
      */
      private void updateFields() {
         //Update each TextField
@@ -282,19 +286,6 @@ public class MainWindow extends Application {
              }
          }
      }
-
-    /**
-     * Build a TextField
-     *
-     * @param text The default text to display on the TextField
-     * @param editable Should this TextField be editable?
-     * @return A TextField with the given parameters.
-     */
-    private static TextField makeTextField(String text, boolean editable) {
-        TextField toReturn = new TextField(text);
-        toReturn.setEditable(editable);
-        return toReturn;
-    }
 
     /**
      * Starts the GUI

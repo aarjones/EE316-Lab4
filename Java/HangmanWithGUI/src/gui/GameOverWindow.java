@@ -1,21 +1,17 @@
 package gui;
 
-import com.sun.deploy.security.SelectableSecurityManager;
 import comports.ComInterface;
-import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import sun.security.x509.OtherName;
 
-public class GameOverWindow extends Application {
+public class GameOverWindow extends Window {
     /* **************** PUBLIC VARS **************** */
     /**
      * The default height of the window
@@ -126,15 +122,13 @@ public class GameOverWindow extends Application {
     }
 
     /**
-     * Builds a Label
+     * Placeholder.
      *
-     * @param label The text to show on the Label
-     * @return A new Label with the given parameters
+     * @param c The character received.
      */
-    private static Label makeLabel(String label) {
-        Label toReturn = new Label(label);
-        toReturn.setAlignment(Pos.TOP_CENTER);
-        return toReturn;
+    @Override
+    public void keyPressed(char c) {
+        //do nothing
     }
 
     public static void main(String[] args) {
