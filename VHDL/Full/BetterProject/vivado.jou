@@ -1,0 +1,16 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Thu Mar 10 14:44:05 2022
+# Process ID: 5952
+# Current directory: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent22892 C:\Users\jones\Desktop\EE316-Lab4\VHDL\Full\BetterProject\BetterProject.xpr
+# Log file: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/vivado.log
+# Journal file: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.xpr
+update_compile_order -fileset sources_1
+add_files -fileset constrs_1 -norecurse C:/Xilinx/digilent-xdc-master/Cora-Z7-10-Master.xdc
+import_files -fileset constrs_1 C:/Xilinx/digilent-xdc-master/Cora-Z7-10-Master.xdc
