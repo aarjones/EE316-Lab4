@@ -1,3 +1,4 @@
+
 package comports;
 
 import com.fazecast.jSerialComm.SerialPort;
@@ -8,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class ComInterface implements Runnable {
