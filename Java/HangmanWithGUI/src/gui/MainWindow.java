@@ -2,6 +2,7 @@ package gui;
 
 import comports.ComInterface;
 import exceptions.CharacterAlreadyGuessedException;
+import exceptions.GameOverException;
 import hangman.Hangman;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -61,6 +62,14 @@ public class MainWindow extends Window {
      */
     private int numWins;
     /**
+     * The maximum number of bad guesses allowed per game
+     */
+    private int numBadGuesses;
+    /**
+     * The Stage for this Window
+     */
+    private Stage stage;
+    /**
      * A TextField where the current text will be shown.
      */
     private TextField currentText;
@@ -95,6 +104,7 @@ public class MainWindow extends Window {
         this.hangman = new Hangman("TMP_KEY", numBadGuesses);
         this.numGames = numGames;
         this.numWins = numWins;
+        this.numBadGuesses = numBadGuesses;
     }
 
     /**
@@ -107,17 +117,24 @@ public class MainWindow extends Window {
      */
     public MainWindow(ComInterface comPort, int numBadGuesses, int numWins, int numGames) {
         this.comPort = comPort;
-        this.hangman = new Hangman("TMP_KEY", numBadGuesses);
-        this.numGames = numWins;
-        this.numWins = numGames;
+        this.hangman = new Hangman("TMPKEY", numBadGuesses);
+        this.numGames = numGames;
+        this.numWins = numWins;
+        this.numBadGuesses = numBadGuesses;
     }
 
     /**
      * Allows us to run just this file.
      */
     public MainWindow() {
-        this.comPort = null;
+        this.comPort = new ComInterface(); //runs on System.in and System.out
         this.hangman = new Hangman("TMPKEY", 6);
+        this.numGames = 0;
+        this.numWins = 0;
+        this.numBadGuesses = 6;
+
+        this.comPort.updateWindow(this);
+        new Thread(this.comPort).start();
     }
 
     /**
@@ -128,6 +145,8 @@ public class MainWindow extends Window {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.stage = primaryStage;
+
         //Set the size of the screen
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         final int SCREEN_WIDTH = (int)screenBounds.getWidth();
@@ -230,6 +249,7 @@ public class MainWindow extends Window {
             public void handle(WindowEvent event) {
                 if (comPort != null)
                     comPort.closePort();
+                System.exit(0);
             }
         });
 
@@ -251,6 +271,8 @@ public class MainWindow extends Window {
             updateFields();
         } catch(CharacterAlreadyGuessedException cag) {
             //ignore this character/do nothing
+        } catch (GameOverException goe) {
+            updateFields();
         }
     }
 
@@ -278,11 +300,17 @@ public class MainWindow extends Window {
 
         //Handle if the game is over
          if(this.hangman.gameOver()) {
-             if(this.hangman.isSolved()) {
-                 //win
-             } else {
-                 //loss
+             this.numGames++;
+             if(this.hangman.isSolved())
+                 this.numWins++;
+             Window window = new NewGameWindow(this.comPort, this.numGames, this.numWins, this.numBadGuesses, this.hangman.isSolved());
+             this.comPort.updateWindow(window);
+             try {
+                 window.start(new Stage());
+             } catch (Exception e) {
+                 e.printStackTrace();
              }
+             this.stage.close();
          }
      }
 

@@ -2,11 +2,13 @@ package comports;
 
 import com.fazecast.jSerialComm.SerialPort;
 import gui.Window;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ComInterface implements Runnable {
@@ -38,6 +40,13 @@ public class ComInterface implements Runnable {
         this.port.setBaudRate(baud);
 
         //TO BE CHANGED TO SERIAL PORT STREAMS
+        this.inputStream = System.in;
+        this.outputStream = System.out;
+    }
+
+    public ComInterface() {
+        this.port = null;
+
         this.inputStream = System.in;
         this.outputStream = System.out;
     }
@@ -88,11 +97,17 @@ public class ComInterface implements Runnable {
     @Override
     public void run() {
         Scanner sc = new Scanner(this.inputStream);
-        
+
         while(sc.hasNext()) {
-            String s = sc.next();
+            String s = sc.next().toUpperCase();
             for(int i = 0; i < s.length(); i++) {
-                this.window.keyPressed(s.charAt(i));
+                int tmpi = i;
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        window.keyPressed(s.charAt(tmpi));
+                    }
+                });
             }
         }
 
@@ -103,6 +118,7 @@ public class ComInterface implements Runnable {
      * Closes this ComInterface's SerialPort
      */
     public void closePort() {
-        this.port.closePort();
+        if(this.port != null)
+            this.port.closePort();
     }
 }

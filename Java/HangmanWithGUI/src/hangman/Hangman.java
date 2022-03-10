@@ -1,6 +1,7 @@
 package hangman;
 
 import exceptions.CharacterAlreadyGuessedException;
+import exceptions.GameOverException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,8 +96,9 @@ public class Hangman {
      * @return Was the character found?
      * @throws CharacterAlreadyGuessedException Thrown when a character is guessed for a second time.
      */
-    public boolean checkLetter(char c) throws CharacterAlreadyGuessedException {
+    public boolean checkLetter(char c) throws CharacterAlreadyGuessedException, GameOverException {
         if(this.allGuesses.contains(c)) throw new CharacterAlreadyGuessedException(c + " has already been guessed!");
+        if(this.endGame) throw new GameOverException("The game is already over!");
 
         //check if the character is in the key
         if(this.key.indexOf(c) != -1) {
@@ -171,8 +173,5 @@ public class Hangman {
     public boolean isSolved() {
         return this.solved;
     }
-
-
-
 
 }

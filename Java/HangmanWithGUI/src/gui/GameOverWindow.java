@@ -58,7 +58,7 @@ public class GameOverWindow extends Window {
      * @param numWins The number of wins so far
      * @param numBadGuesses The maximum number of bad guesses allowed in a game
      */
-    public GameOverWindow(ComInterface comPort, int numGames, int numWins, int numBadGuesses) {
+    public GameOverWindow(ComInterface comPort, int numGames, int numWins) {
         this.comPort = comPort;
         this.numGames = numGames;
         this.numWins = numWins;
@@ -117,6 +117,7 @@ public class GameOverWindow extends Window {
             public void handle(WindowEvent event) {
                 if (comPort != null)
                     comPort.closePort();
+                System.exit(0);
             }
         });
     }

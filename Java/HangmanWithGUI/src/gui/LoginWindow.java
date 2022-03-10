@@ -18,6 +18,7 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import static comports.ComInterface.getComPorts;
 
@@ -157,6 +158,13 @@ public class LoginWindow extends Window {
         primaryStage.getIcons().add(new Image("file:./res/icon1.png"));
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                System.exit(0);
+            }
+        });
     }
 
     /**

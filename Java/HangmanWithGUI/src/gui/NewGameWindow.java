@@ -1,6 +1,7 @@
 package gui;
 
 import comports.ComInterface;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -8,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class NewGameWindow extends Window {
     /* **************** PUBLIC VARS **************** */
@@ -62,6 +64,9 @@ public class NewGameWindow extends Window {
         this.numGames = numGames;
         this.numWins = numWins;
         this.victory = victory;
+
+        //Since this is a new ComInterface, start the ComInterface thread.
+        new Thread(this.comPort).start();
     }
 
     /**
@@ -138,6 +143,14 @@ public class NewGameWindow extends Window {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                if (comPort != null)
+                    comPort.closePort();
+                System.exit(0);
+            }
+        });
         //new Thread(new TestNewGameWindow(this)).start();
     }
 
@@ -150,6 +163,7 @@ public class NewGameWindow extends Window {
     public void keyPressed(char c) {
         if(c == 'Y') {
             Window window = new MainWindow(this.comPort, this.numBadGuesses, this.numWins, this.numGames);
+            this.comPort.updateWindow(window);
             try {
                 window.start(new Stage());
             } catch (Exception e) {
@@ -157,12 +171,14 @@ public class NewGameWindow extends Window {
             }
             this.primaryStage.close();
         } else if(c == 'N') {
-            GameOverWindow window = new GameOverWindow(this.comPort, this.numBadGuesses, this.numWins, this.numGames);
+            GameOverWindow window = new GameOverWindow(this.comPort, this.numGames, this.numWins);
+            this.comPort.updateWindow(window);
             try {
                 window.start(new Stage());
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
+            this.primaryStage.close();
         }
     }
 
