@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Thu Mar 10 12:37:29 2022
+# Process ID: 18112
+# Current directory: C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/UART/EE316_Project4.runs/synth_1
+# Command line: vivado.exe -log uart_user.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source uart_user.tcl
+# Log file: C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/UART/EE316_Project4.runs/synth_1/uart_user.vds
+# Journal file: C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/UART/EE316_Project4.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source uart_user.tcl -notrace

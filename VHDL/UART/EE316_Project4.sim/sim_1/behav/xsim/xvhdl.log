@@ -1,4 +1,2 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Cole/EE316_Project4/uart.vhd" into library xil_defaultlib
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/UART/uart.vhd" into library xil_defaultlib
 INFO: [VRFC 10-3107] analyzing entity 'uart'
-INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/Cole/EE316_Project4/EE316_Project4.srcs/sources_1/new/uart_user.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'uart_user'

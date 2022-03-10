@@ -1,0 +1,40 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Thu Mar 10 12:24:28 2022
+# Process ID: 6212
+# Current directory: C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/UART
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent16592 C:\Users\Cole\Documents\GitHub\EE316-Lab4\VHDL\UART\EE316_Project4.xpr
+# Log file: C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/UART/vivado.log
+# Journal file: C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/UART\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/UART/EE316_Project4.xpr
+update_compile_order -fileset sources_1
+synth_design -rtl -name rtl_1
+launch_runs synth_1 -jobs 6
+set_property top uart_user [current_fileset]
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+launch_runs synth_1 -jobs 6
+wait_on_run synth_1
+open_run synth_1 -name synth_1
+synth_design -rtl -name rtl_1
+launch_simulation
+source uart_user.tcl
+close_sim
+launch_simulation
+source uart_user.tcl
+add_force {/uart_user/clock} -radix hex {0 0ns} {1 4000ps} -repeat_every 8000ps
+add_force {/uart_user/reset_n} -radix hex {1 0ns}
+add_force {/uart_user/inData} -radix hex {41 0ns}
+add_force {/uart_user/keypressed} -radix hex {0 0ns}
+run 100 ns
+add_force {/uart_user/keypressed} -radix hex {1 0ns}
+run 100 ns
+run 100 ns
+run 100 ns
+run 100 ns
+close_sim

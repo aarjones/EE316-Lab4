@@ -72,7 +72,7 @@ end process;
 
 process(keypressed)
 begin
-    if rising_edge(keypressed) then
+    if keypressed = '1' then
         if tx_busy = '0' then
             tx_en <= '1';
         end if;    

@@ -1,0 +1,28 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Thu Mar 10 12:19:29 2022
+# Process ID: 9252
+# Current directory: C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/Keyboard
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent5808 C:\Users\Cole\Documents\GitHub\EE316-Lab4\VHDL\Keyboard\project_4.xpr
+# Log file: C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/Keyboard/vivado.log
+# Journal file: C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/Keyboard\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/Keyboard/project_4.xpr
+INFO: [Project 1-313] Project file moved from 'C:/Users/herendjb/project_4' since last save.
+CRITICAL WARNING: [Project 1-311] Could not find the file 'C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/Downloads/debounce.vhd', nor could it be found using path 'C:/Users/herendjb/Downloads/debounce.vhd'.
+CRITICAL WARNING: [Project 1-311] Could not find the file 'C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/Downloads/ps2_keyboard.vhd', nor could it be found using path 'C:/Users/herendjb/Downloads/ps2_keyboard.vhd'.
+CRITICAL WARNING: [Project 1-311] Could not find the file 'C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/Downloads/ps2_keyboard_to_ascii.vhd', nor could it be found using path 'C:/Users/herendjb/Downloads/ps2_keyboard_to_ascii.vhd'.
+CRITICAL WARNING: [Project 1-311] Could not find the file 'C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/Downloads/Cora-Z7-07S-Master.xdc', nor could it be found using path 'C:/Users/herendjb/Downloads/Cora-Z7-07S-Master.xdc'.
+Scanning sources...
+Finished scanning sources
+WARNING: [filemgmt 56-2] IPUserFilesDir: Could not find the directory 'C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/Keyboard/project_4.ip_user_files', nor could it be found using path 'C:/Users/herendjb/project_4/project_4.ip_user_files'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2019.1/data/ip'.
+open_project: Time (s): cpu = 00:00:25 ; elapsed = 00:00:11 . Memory (MB): peak = 716.852 ; gain = 79.973
+update_compile_order -fileset sources_1
+exit
+INFO: [Common 17-206] Exiting Vivado at Thu Mar 10 12:24:16 2022...

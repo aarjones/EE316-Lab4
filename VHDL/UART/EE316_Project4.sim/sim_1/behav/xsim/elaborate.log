@@ -10,6 +10,6 @@ Time Resolution for simulation is 1ps
 Compiling package std.standard
 Compiling package std.textio
 Compiling package ieee.std_logic_1164
-Compiling architecture logic of entity xil_defaultlib.uart [uart_default]
+Compiling architecture logic of entity xil_defaultlib.uart [\uart(baud_rate=9600)\]
 Compiling architecture behavioral of entity xil_defaultlib.uart_user
 Built simulation snapshot uart_user_behav
