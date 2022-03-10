@@ -30,7 +30,7 @@ public class MainWindow extends Window {
     /**
      * The default height of the window
      */
-    public static final int DEFAULT_WIDTH = 400;
+    public static final int DEFAULT_WIDTH = 500;
     /**
      * The default width of the window
      */
@@ -185,20 +185,24 @@ public class MainWindow extends Window {
         this.remainingGuesses = makeTextField("# Guesses", false);
 
         //Set up the tmp hangman photo
-        this.hangmanImageView = new ImageView(new Image("file:./res/hangman_tmp.png"));
+        /*
+        this.hangmanImageView = new ImageView(new Image("file:./res/HangmanFull.png"));
         this.hangmanImageView.setTranslateY(30);
+        this.hangmanImageView.setTranslateX(-90);
         this.hangmanImageView.setPreserveRatio(false);
         this.hangmanImageView.setFitHeight(windowHeight * 3/7d);
+         */
 
         ImageView hangmanGallows = new ImageView(new Image("file:./res/gallows.png"));
         hangmanGallows.setPreserveRatio(false);
+        hangmanGallows.setTranslateX(60);
         hangmanGallows.setFitWidth(windowWidth * 5/6d);
         hangmanGallows.setFitHeight(windowHeight * 4/7d);
 
         //Set up StackPane for hangman
         this.hangmanBox = new StackPane();
         this.hangmanBox.getChildren().add(hangmanGallows);
-        this.hangmanBox.getChildren().add(this.hangmanImageView);
+        //this.hangmanBox.getChildren().add(this.hangmanImageView);
         this.hangmanBox.setAlignment(Pos.CENTER_LEFT);
         this.hangmanBox.setPrefHeight(SCREEN_HEIGHT * 4/6d);
         this.hangmanBox.setPrefWidth(SCREEN_WIDTH);

@@ -5,6 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public abstract class Window extends Application {
     /**
@@ -13,6 +15,23 @@ public abstract class Window extends Application {
      * @param c The character received.
      */
     public abstract void keyPressed(char c);
+
+    /**
+     * Create an ImageView.  Used to create each Hangman piece
+     *
+     * @param filepath The path to the file
+     * @param windowHeight The height of the window
+     * @return An ImageView containing the image found at filepath.
+     */
+    public static ImageView buildImageView(String filepath, int windowHeight) {
+        ImageView image = new ImageView(new Image(filepath));
+        image.setTranslateY(30);
+        image.setTranslateX(-90);
+        image.setPreserveRatio(false);
+        image.setFitHeight(windowHeight * 3/7d);
+
+        return image;
+    }
 
     /**
      * Builds a TextField
