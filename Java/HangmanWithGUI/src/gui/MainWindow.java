@@ -244,7 +244,6 @@ public class MainWindow extends Window {
      * A key has been pressed.  Used to guess letters using the Hangman object.
      *
      * @param c The letter to guess
-     * @throws CharacterAlreadyGuessedException An exception thrown if the user tries to guess the same exception twice.
      */
     public void keyPressed(char c) {
         try {

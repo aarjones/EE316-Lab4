@@ -149,7 +149,7 @@ public class NewGameWindow extends Window {
     @Override
     public void keyPressed(char c) {
         if(c == 'Y') {
-            MainWindow window = new MainWindow(this.comPort, this.numBadGuesses, this.numWins, this.numGames);
+            Window window = new MainWindow(this.comPort, this.numBadGuesses, this.numWins, this.numGames);
             try {
                 window.start(new Stage());
             } catch (Exception e) {
