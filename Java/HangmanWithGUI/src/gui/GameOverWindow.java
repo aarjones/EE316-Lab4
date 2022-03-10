@@ -1,6 +1,7 @@
 package gui;
 
 import comports.ComInterface;
+import hangman.HangmanStats;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -28,40 +29,31 @@ public class GameOverWindow extends Window {
      */
     private ComInterface comPort;
     /**
-     * The number of games played so far
+     * The HangmanStats for this session
      */
-    private int numGames;
-    /**
-     * The number of wins so far
-     */
-    private int numWins;
+    private HangmanStats gameStats;
 
     /**
      * Generates a NewGameWindow and opens a COM port
      *
      * @param portDescriptor The port descriptor of which COM port to use
      * @param baud The baud rate to use for the COM port
-     * @param numGames The number of games played so far
-     * @param numWins The number of wins so far
+     * @param gameStats The HangmanStats for the current session
      */
-    public GameOverWindow(String portDescriptor, int baud, int numGames, int numWins) {
+    public GameOverWindow(String portDescriptor, int baud, HangmanStats gameStats) {
         this.comPort = new ComInterface(portDescriptor, baud);
-        this.numGames = numGames;
-        this.numWins = numWins;
+        this.gameStats = gameStats;
     }
 
     /**
      * Generates a NewGameWindow with a pre-initialized COM port
      *
      * @param comPort A ComInterface for an open COM port.
-     * @param numGames The number of games played so far
-     * @param numWins The number of wins so far
-     * @param numBadGuesses The maximum number of bad guesses allowed in a game
+     * @param gameStats The HangmanStats for the current session.
      */
-    public GameOverWindow(ComInterface comPort, int numGames, int numWins) {
+    public GameOverWindow(ComInterface comPort, HangmanStats gameStats) {
         this.comPort = comPort;
-        this.numGames = numGames;
-        this.numWins = numWins;
+        this.gameStats = gameStats;
     }
 
     /**
@@ -69,8 +61,7 @@ public class GameOverWindow extends Window {
      */
     public GameOverWindow() {
         this.comPort = null;
-        this.numGames = 5;
-        this.numWins = 3;
+        this.gameStats = new HangmanStats(6, 0, 0, false, "");
     }
 
     /**
@@ -99,7 +90,7 @@ public class GameOverWindow extends Window {
         vBox.setAlignment(Pos.CENTER);
         vBox.getStyleClass().add("vbox");
         vBox.getChildren().add(makeLabel("GAME OVER!"));
-        vBox.getChildren().add(makeLabel("Final Score: " + this.numWins + " correct out of " + this.numGames + " puzzles"));
+        vBox.getChildren().add(makeLabel("Final Score: " + this.gameStats.getNumWins() + " correct out of " + this.gameStats.getNumGames() + " puzzles"));
 
         //Set up the scene
         Scene scene = new Scene(vBox, DEFAULT_WIDTH, DEFAULT_HEIGHT);

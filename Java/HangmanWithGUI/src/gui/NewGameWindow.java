@@ -1,6 +1,7 @@
 package gui;
 
 import comports.ComInterface;
+import hangman.HangmanStats;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -32,38 +33,24 @@ public class NewGameWindow extends Window {
      */
     private ComInterface comPort;
     /**
-     * The number of bad guesses for this set of games
+     * The previous Stage
      */
-    private int numBadGuesses;
+    private Stage previousStage;
     /**
-     * The number of games played so far
+     * The HangmanStats for this session
      */
-    private int numGames;
-    /**
-     * The number of wins so far
-     */
-    private int numWins;
-    /**
-     * If the previous game was a victory
-     */
-    private boolean victory;
+    private HangmanStats gameStats;
 
     /**
      * Generates a NewGameWindow and opens a COM port
      *
      * @param portDescriptor The port descriptor of which COM port to use
      * @param baud The baud rate to use for the COM port
-     * @param numGames The number of games played so far
-     * @param numWins The number of wins so far
-     * @param numBadGuesses The maximum number of bad guesses allowed in a game
-     * @param victory Was the last game a victory?
+     * @param gameStats The HangmanStats for this session
      */
-    public NewGameWindow(String portDescriptor, int baud, int numGames, int numWins, int numBadGuesses, boolean victory) {
+    public NewGameWindow(String portDescriptor, int baud, HangmanStats gameStats) {
         this.comPort = new ComInterface(portDescriptor, baud);
-        this.numBadGuesses = numBadGuesses;
-        this.numGames = numGames;
-        this.numWins = numWins;
-        this.victory = victory;
+        this.gameStats = gameStats;
 
         //Since this is a new ComInterface, start the ComInterface thread.
         new Thread(this.comPort).start();
@@ -78,12 +65,10 @@ public class NewGameWindow extends Window {
      * @param numBadGuesses The maximum number of bad guesses allowed in a game
      * @param victory Was the last game a victory?
      */
-    public NewGameWindow(ComInterface comPort, int numGames, int numWins, int numBadGuesses, boolean victory) {
+    public NewGameWindow(ComInterface comPort, HangmanStats gameStats, Stage previousStage) {
         this.comPort = comPort;
-        this.numBadGuesses = numBadGuesses;
-        this.numGames = numGames;
-        this.numWins = numWins;
-        this.victory = victory;
+        this.previousStage = previousStage;
+        this.gameStats = gameStats;
     }
 
     /**
@@ -91,10 +76,7 @@ public class NewGameWindow extends Window {
      */
     public NewGameWindow() {
         this.comPort = null;
-        this.victory = false;
-        this.numBadGuesses = 6;
-        this.numGames = 0;
-        this.numWins = 0;
+        this.gameStats = new HangmanStats(6, 0, 0, false, "");
     }
 
     /**
@@ -124,12 +106,14 @@ public class NewGameWindow extends Window {
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
         vBox.getStyleClass().add("vbox");
-        if(this.numGames != 0) {
-            if (this.victory)
+        if(this.gameStats.getNumGames() != 0) {
+            if (this.gameStats.isPreviousGameVictory())
                 vBox.getChildren().add(makeLabel("You win!"));
-            else
-                vBox.getChildren().add(makeLabel("You Lose!"));
-            vBox.getChildren().add(makeLabel("You have solved " + this.numWins + " puzzles out of " + this.numGames));
+            else {
+                vBox.getChildren().add(makeLabel("Sorry!"));
+                vBox.getChildren().add(makeLabel("The correct word was: " + this.gameStats.getPreviousKey()));
+            }
+            vBox.getChildren().add(makeLabel("You have solved " + this.gameStats.getNumWins() + " puzzles out of " + this.gameStats.getNumGames()));
         }
         vBox.getChildren().add(makeLabel("New Game? (Y/n)"));
 
@@ -162,7 +146,8 @@ public class NewGameWindow extends Window {
     @Override
     public void keyPressed(char c) {
         if(c == 'Y') {
-            Window window = new MainWindow(this.comPort, this.numBadGuesses, this.numWins, this.numGames);
+            this.previousStage.close();
+            Window window = new MainWindow(this.comPort, this.gameStats);
             this.comPort.updateWindow(window);
             try {
                 window.start(new Stage());
@@ -171,7 +156,8 @@ public class NewGameWindow extends Window {
             }
             this.primaryStage.close();
         } else if(c == 'N') {
-            GameOverWindow window = new GameOverWindow(this.comPort, this.numGames, this.numWins);
+            this.previousStage.close();
+            GameOverWindow window = new GameOverWindow(this.comPort, this.gameStats);
             this.comPort.updateWindow(window);
             try {
                 window.start(new Stage());

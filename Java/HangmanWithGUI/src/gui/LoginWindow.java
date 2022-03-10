@@ -1,5 +1,6 @@
 package gui;
 
+import hangman.HangmanStats;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -109,7 +110,8 @@ public class LoginWindow extends Window {
         this.startButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Window window = new NewGameWindow(comPorts.getValue(), Integer.parseInt(baudField.getText()), 0, 0, Integer.parseInt(badGuesses.getText()), false);
+                HangmanStats gameStats = new HangmanStats(Integer.parseInt(badGuesses.getText()));
+                Window window = new NewGameWindow(comPorts.getValue(), Integer.parseInt(baudField.getText()), gameStats);
                 try {
                     window.start(new Stage());
                 } catch (Exception e) {

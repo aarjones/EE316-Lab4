@@ -4,6 +4,7 @@ import comports.ComInterface;
 import exceptions.CharacterAlreadyGuessedException;
 import exceptions.GameOverException;
 import hangman.Hangman;
+import hangman.HangmanStats;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -54,18 +55,6 @@ public class MainWindow extends Window {
      */
     private ComInterface comPort;
     /**
-     * The number of games played
-     */
-    private int numGames;
-    /**
-     * The number of wins
-     */
-    private int numWins;
-    /**
-     * The maximum number of bad guesses allowed per game
-     */
-    private int numBadGuesses;
-    /**
      * The Stage for this Window
      */
     private Stage stage;
@@ -89,38 +78,34 @@ public class MainWindow extends Window {
      * The VBox where the Image will be placed
      */
     private StackPane hangmanBox;
+    /**
+     * The HangmanStats for this session
+     */
+    private HangmanStats gameStats;
 
     /**
      * Create a new MainWindow, maintaining all COM parameters and game statistics.
      *
      * @param portDescriptor The portDescriptor of the COM port to use in this game
      * @param baud The baud rate to use for the COM port
-     * @param numBadGuesses The maximum number of bad games allowed per game
-     * @param numWins The number of wins so far
-     * @param numGames The number of games played so far
+     * @param gameStats The HangmanStats for the current session.
      */
-    public MainWindow(String portDescriptor, int baud, int numBadGuesses, int numWins, int numGames) {
+    public MainWindow(String portDescriptor, int baud, HangmanStats gameStats) {
         this.comPort = new ComInterface(portDescriptor, baud);
-        this.hangman = new Hangman("TMP_KEY", numBadGuesses);
-        this.numGames = numGames;
-        this.numWins = numWins;
-        this.numBadGuesses = numBadGuesses;
+        this.hangman = new Hangman("TMP_KEY", gameStats.getMaxGuesses());
+        this.gameStats = gameStats;
     }
 
     /**
      * Create a new MainWindow, maintaining all COM parameters and game statistics
      *
      * @param comPort The ComInterface used by this game
-     * @param numBadGuesses The maximum number of bad guesses per game
-     * @param numWins The number of wins so far
-     * @param numGames The number of games played so far
+     * @param gameStats The HangmanStats for the current session
      */
-    public MainWindow(ComInterface comPort, int numBadGuesses, int numWins, int numGames) {
+    public MainWindow(ComInterface comPort, HangmanStats gameStats) {
         this.comPort = comPort;
-        this.hangman = new Hangman("TMPKEY", numBadGuesses);
-        this.numGames = numGames;
-        this.numWins = numWins;
-        this.numBadGuesses = numBadGuesses;
+        this.hangman = new Hangman("TMPKEY", gameStats.getMaxGuesses());
+        this.gameStats = gameStats;
     }
 
     /**
@@ -129,9 +114,7 @@ public class MainWindow extends Window {
     public MainWindow() {
         this.comPort = new ComInterface(); //runs on System.in and System.out
         this.hangman = new Hangman("TMPKEY", 6);
-        this.numGames = 0;
-        this.numWins = 0;
-        this.numBadGuesses = 6;
+        this.gameStats = new HangmanStats(6, 0, 0, false, "TMPKEY");
 
         this.comPort.updateWindow(this);
         new Thread(this.comPort).start();
@@ -202,7 +185,6 @@ public class MainWindow extends Window {
         //Set up StackPane for hangman
         this.hangmanBox = new StackPane();
         this.hangmanBox.getChildren().add(hangmanGallows);
-        //this.hangmanBox.getChildren().add(this.hangmanImageView);
         this.hangmanBox.setAlignment(Pos.CENTER_LEFT);
         this.hangmanBox.setPrefHeight(SCREEN_HEIGHT * 4/6d);
         this.hangmanBox.setPrefWidth(SCREEN_WIDTH);
@@ -292,29 +274,43 @@ public class MainWindow extends Window {
         //hang the man here
         switch(this.hangman.getRemainingGuesses()) {
             case 0:
+                this.hangmanBox.getChildren().add(buildImageView("file:./res/hangman-right-leg.png", DEFAULT_HEIGHT));
+                break;
             case 1:
+                this.hangmanBox.getChildren().add(buildImageView("file:./res/hangman-left-leg.png", DEFAULT_HEIGHT));
+                break;
             case 2:
+                this.hangmanBox.getChildren().add(buildImageView("file:./res/hangman-right-arm.png", DEFAULT_HEIGHT));
+                break;
             case 3:
+                this.hangmanBox.getChildren().add(buildImageView("file:./res/hangman-left-arm.png", DEFAULT_HEIGHT));
+                break;
             case 4:
+                this.hangmanBox.getChildren().add(buildImageView("file:./res/hangman-torso.png", DEFAULT_HEIGHT));
+                break;
             case 5:
-            case 6:
+                this.hangmanBox.getChildren().add(buildImageView("file:./res/hangman-head.png", DEFAULT_HEIGHT));
+                break;
             default:
                 break;
         }
 
         //Handle if the game is over
+        checkGameOver();
+
+     }
+
+     public void checkGameOver() {
          if(this.hangman.gameOver()) {
-             this.numGames++;
-             if(this.hangman.isSolved())
-                 this.numWins++;
-             Window window = new NewGameWindow(this.comPort, this.numGames, this.numWins, this.numBadGuesses, this.hangman.isSolved());
+             this.gameStats.gameEnded(this.hangman.isSolved(), this.hangman.getKey());
+             Window window = new NewGameWindow(this.comPort, this.gameStats, this.stage);
              this.comPort.updateWindow(window);
              try {
                  window.start(new Stage());
              } catch (Exception e) {
                  e.printStackTrace();
              }
-             this.stage.close();
+             //this.stage.close();
          }
      }
 

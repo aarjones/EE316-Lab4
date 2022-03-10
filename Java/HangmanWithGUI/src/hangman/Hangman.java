@@ -174,4 +174,8 @@ public class Hangman {
         return this.solved;
     }
 
+    public String getKey() {
+        return this.key;
+    }
+
 }
