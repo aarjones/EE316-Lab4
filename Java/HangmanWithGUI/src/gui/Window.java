@@ -7,6 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import sun.applet.Main;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
 
 public abstract class Window extends Application {
     /**
@@ -15,6 +21,24 @@ public abstract class Window extends Application {
      * @param c The character received.
      */
     public abstract void keyPressed(char c);
+
+    /**
+     * Play music.
+     */
+    public static void playSound() {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Clip clip = AudioSystem.getClip();
+                    AudioInputStream inputStream = AudioSystem.getAudioInputStream( new File("./res/symphony5.wav"));
+                    clip.open(inputStream);
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+        }).start();
+    }
 
     /**
      * Create an ImageView.  Used to create each Hangman piece

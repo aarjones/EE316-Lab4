@@ -229,6 +229,8 @@ public class MainWindow extends Window {
 
         updateFields();
 
+        playSound();
+
         //Handle closing
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -238,12 +240,6 @@ public class MainWindow extends Window {
                 System.exit(0);
             }
         });
-
-        /*
-        Run the test script on a second thread
-        This is very similar to how I expect to get input from the FPGA--start a second thread which uses MainWindow's guessLetter() function
-        */
-        //new Thread(new TestMainWindow(this)).start();
     }
 
     /**
@@ -275,22 +271,16 @@ public class MainWindow extends Window {
         switch(this.hangman.getRemainingGuesses()) {
             case 0:
                 this.hangmanBox.getChildren().add(buildImageView("file:./res/hangman-right-leg.png", DEFAULT_HEIGHT));
-                break;
             case 1:
                 this.hangmanBox.getChildren().add(buildImageView("file:./res/hangman-left-leg.png", DEFAULT_HEIGHT));
-                break;
             case 2:
                 this.hangmanBox.getChildren().add(buildImageView("file:./res/hangman-right-arm.png", DEFAULT_HEIGHT));
-                break;
             case 3:
                 this.hangmanBox.getChildren().add(buildImageView("file:./res/hangman-left-arm.png", DEFAULT_HEIGHT));
-                break;
             case 4:
                 this.hangmanBox.getChildren().add(buildImageView("file:./res/hangman-torso.png", DEFAULT_HEIGHT));
-                break;
             case 5:
                 this.hangmanBox.getChildren().add(buildImageView("file:./res/hangman-head.png", DEFAULT_HEIGHT));
-                break;
             default:
                 break;
         }

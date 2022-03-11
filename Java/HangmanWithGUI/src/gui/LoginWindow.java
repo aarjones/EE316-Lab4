@@ -161,6 +161,8 @@ public class LoginWindow extends Window {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        playSound();
+
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
