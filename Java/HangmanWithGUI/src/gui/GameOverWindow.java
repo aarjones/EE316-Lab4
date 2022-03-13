@@ -1,6 +1,7 @@
 package gui;
 
 import comports.ComInterface;
+import comports.LcdController;
 import hangman.HangmanStats;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -101,6 +102,8 @@ public class GameOverWindow extends Window {
         primaryStage.getIcons().add(new Image("file:./res/icon1.png"));
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        LcdController.updateLCDGameOverWindow(this.comPort, this.gameStats);
 
         //Close the COM port
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {

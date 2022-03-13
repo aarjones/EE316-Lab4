@@ -1,5 +1,7 @@
 package comports;
 
+import hangman.HangmanStats;
+
 import java.util.Arrays;
 
 public class LcdController implements Runnable {
@@ -76,7 +78,7 @@ public class LcdController implements Runnable {
                 //and add a delay
                 try {
                     if(i == 0)
-                        Thread.sleep(2000);
+                        Thread.sleep(1500);
                     else
                         Thread.sleep(250);
                 } catch(InterruptedException ie) {
@@ -98,5 +100,64 @@ public class LcdController implements Runnable {
         }
 
         this.comPort.sendData(total);
+    }
+
+    /**
+     * Sends a message to the LCD for NewGameWindow
+     */
+    public static void updateLCDNewGameWindow(ComInterface comPort, HangmanStats gameStats) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //send win/loss message
+                String top, bottom = "";
+                if(gameStats.isPreviousGameVictory())
+                    top = "Well Done! You have solved " + gameStats.getNumWins() + " puzzles out of " + gameStats.getNumGames();
+                else
+                    top = "Sorry! The correct word was " + gameStats.getPreviousKey() + ". You have solved " + gameStats.getNumWins() + " puzzles out of " + gameStats.getNumGames();
+
+                LcdController lcd = new LcdController(comPort, top, bottom);
+                Thread lcdThread = new Thread(lcd);
+                lcdThread.start();
+                try {
+                    lcdThread.join();
+                    Thread.sleep(1000);
+                } catch(InterruptedException ie) {
+                    System.err.println("Error in updateLCD(): " + ie.getMessage());
+                }
+
+                //send new game prompt
+                lcd = new LcdController(comPort, "New Game? (y/n)", "");
+                new Thread(lcd).start();
+            }
+        }).start();
+    }
+
+    /**
+     * Updates the message displayed on the LCD for GameOverWindow
+     */
+    public static void updateLCDGameOverWindow(ComInterface comPort, HangmanStats gameStats) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //send win/loss message
+                String top, bottom = "";
+                top = "Final Score: " + gameStats.getNumWins() + " correct out of " + gameStats.getNumGames();
+
+                LcdController lcd = new LcdController(comPort, top, bottom);
+                Thread lcdThread = new Thread(lcd);
+                lcdThread.start();
+                try {
+                    lcdThread.join();
+                    Thread.sleep(1000);
+                } catch(InterruptedException ie) {
+                    System.err.println("Error in updateLCD(): " + ie.getMessage());
+                }
+
+                //send new game prompt
+                lcd = new LcdController(comPort, "GAME OVER", "");
+                new Thread(lcd).start();
+            }
+        }).start();
     }
 }

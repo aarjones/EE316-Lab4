@@ -131,7 +131,7 @@ public class NewGameWindow extends Window {
         primaryStage.show();
 
         //update the text shown on the LCD
-        updateLCD();
+        LcdController.updateLCDNewGameWindow(this.comPort, this.gameStats);
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -172,29 +172,6 @@ public class NewGameWindow extends Window {
             }
             this.primaryStage.close();
         }
-    }
-
-    private void updateLCD() {
-        //send win/loss message
-        String top, bottom = "";
-        if(this.gameStats.isPreviousGameVictory())
-            top = "Well Done! You have solved " + this.gameStats.getNumWins() + " puzzles out of " + this.gameStats.getNumGames();
-        else
-            top = "Sorry! The correct word was " + this.gameStats.getPreviousKey() + ". You have solved " + this.gameStats.getNumWins() + " puzzles out of " + this.gameStats.getNumGames();
-
-        LcdController lcd = new LcdController(this.comPort, top, bottom);
-        Thread lcdThread = new Thread(lcd);
-        lcdThread.start();
-        try {
-            lcdThread.join();
-            Thread.sleep(1000);
-        } catch(InterruptedException ie) {
-            System.err.println("Error in updateLCD(): " + ie.getMessage());
-        }
-
-        //send new game prompt
-        lcd = new LcdController(this.comPort, "New Game? (y/n)", "");
-        new Thread(lcd).start();
     }
 
     public static void main(String[] args) {
