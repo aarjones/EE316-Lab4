@@ -80,6 +80,8 @@ public class ComInterface implements Runnable {
                 System.err.println("IOException in ComInterface's sendData: " + ioe.getMessage());
             }
         }
+
+        System.out.println();
     }
 
     /**

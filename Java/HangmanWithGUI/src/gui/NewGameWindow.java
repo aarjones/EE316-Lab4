@@ -1,6 +1,7 @@
 package gui;
 
 import comports.ComInterface;
+import comports.LcdController;
 import hangman.HangmanStats;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -11,6 +12,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import java.util.Arrays;
 
 public class NewGameWindow extends Window {
     /* **************** PUBLIC VARS **************** */
@@ -57,13 +60,12 @@ public class NewGameWindow extends Window {
     }
 
     /**
-     * Generates a NewGameWindow with a pre-initialized COM port
+     * Generates a NewGameWindow with a pre-initialized COM port.  Keeps the previous window open until a new game is
+     * started or this game is ended.
      *
      * @param comPort A ComInterface for an open COM port.
-     * @param numGames The number of games played so far
-     * @param numWins The number of wins so far
-     * @param numBadGuesses The maximum number of bad guesses allowed in a game
-     * @param victory Was the last game a victory?
+     * @param gameStats The HangmanStats for this session
+     * @param previousStage The previous window.
      */
     public NewGameWindow(ComInterface comPort, HangmanStats gameStats, Stage previousStage) {
         this.comPort = comPort;
@@ -72,10 +74,11 @@ public class NewGameWindow extends Window {
     }
 
     /**
-     * Allows this window to be run individually.  Customize these values to test the logic used to display victory messages, etc.
+     * Allows this window to be run individually.  Customize these values to test the logic used to display victory
+     * messages, etc.
      */
     public NewGameWindow() {
-        this.comPort = null;
+        this.comPort = new ComInterface();
         this.gameStats = new HangmanStats(6, 0, 0, false, "");
     }
 
@@ -127,6 +130,9 @@ public class NewGameWindow extends Window {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        //update the text shown on the LCD
+        updateLCD();
+
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -166,6 +172,29 @@ public class NewGameWindow extends Window {
             }
             this.primaryStage.close();
         }
+    }
+
+    private void updateLCD() {
+        //send win/loss message
+        String top, bottom = "";
+        if(this.gameStats.isPreviousGameVictory())
+            top = "Well Done! You have solved " + this.gameStats.getNumWins() + " puzzles out of " + this.gameStats.getNumGames();
+        else
+            top = "Sorry! The correct word was " + this.gameStats.getPreviousKey() + ". You have solved " + this.gameStats.getNumWins() + " puzzles out of " + this.gameStats.getNumGames();
+
+        LcdController lcd = new LcdController(this.comPort, top, bottom);
+        Thread lcdThread = new Thread(lcd);
+        lcdThread.start();
+        try {
+            lcdThread.join();
+            Thread.sleep(1000);
+        } catch(InterruptedException ie) {
+            System.err.println("Error in updateLCD(): " + ie.getMessage());
+        }
+
+        //send new game prompt
+        lcd = new LcdController(this.comPort, "New Game? (y/n)", "");
+        new Thread(lcd).start();
     }
 
     public static void main(String[] args) {

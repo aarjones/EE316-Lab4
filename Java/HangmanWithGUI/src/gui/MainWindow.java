@@ -1,6 +1,7 @@
 package gui;
 
 import comports.ComInterface;
+import comports.LcdController;
 import exceptions.CharacterAlreadyGuessedException;
 import exceptions.GameOverException;
 import hangman.Hangman;
@@ -285,9 +286,12 @@ public class MainWindow extends Window {
                 break;
         }
 
+        //write to LCD
+        LcdController lcd = new LcdController(this.comPort, this.hangman.getCurrentText(), "Guesses: " + this.hangman.getRemainingGuesses());
+        new Thread(lcd).start();
+
         //Handle if the game is over
         checkGameOver();
-
      }
 
      public void checkGameOver() {
