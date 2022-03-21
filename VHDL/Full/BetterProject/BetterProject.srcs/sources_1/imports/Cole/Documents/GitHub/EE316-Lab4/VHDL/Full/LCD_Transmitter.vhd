@@ -39,10 +39,13 @@ component i2c_master is
 end component;
 
 --LCD Arrays
-type LCD_FirstLine is array(0 to 3) of std_logic_vector(255 downto 128);
-signal first_line : LCD_FirstLine := (others => (others => '0'));
-TYPE LCD_SecondLine is array(0 to 1) of std_logic_vector(127 downto 0);
-signal second_line : LCD_SecondLine := (others => (others => '0'));
+--type LCD_FirstLine is array(0 to 3) of std_logic_vector(255 downto 128);
+--signal first_line : LCD_FirstLine := (others => (others => '0'));
+--TYPE LCD_SecondLine is array(0 to 1) of std_logic_vector(127 downto 0);
+--signal second_line : LCD_SecondLine := (others => (others => '0'));
+
+signal first_line : std_logic_vector(127 downto 0) := (others => '0');
+signal second_line : std_logic_vector(127 downto 0) := (others => '0');
 
 --state machine
 type state_type is (start, ready, data_valid, busy_high, pause, repeat, do_nothing); --needed states
@@ -92,13 +95,10 @@ Inst_i2c_master : i2c_master
 -- DATA PREPERATION --
 -- First Line  --
 -- This part is editable for custom messages 
---                 
-first_line(0)     <= indata(127 downto 0);
---           
-
---
-second_line(0)    <= indata(255 downto 128);
---                               
+--first_line(0)     <= indata(127 downto 0);
+--second_line(0)    <= indata(255 downto 128);
+first_line <= indata(127 downto 0);
+second_line <= indata(255 downto 128);
 
  
 
@@ -113,39 +113,39 @@ process(byteSel)
        when 5  => data  <= '0'& X"0F";
        when 6  => data  <= '0' & X"0C";
        when 7  => data  <= '0' & X"80";
-       when 8 => data   <= '1'& first_line(0)(127 downto 120);
-       when 9 => data   <= '1' & first_line(0)(119 downto 112);
-       when 10 => data   <= '1'& first_line(0)(111 downto 104);
-       when 11 => data  <= '1'& first_line(0)(103 downto  96);
-       when 12 => data  <= '1'& first_line(0)(95  downto  88);
-       when 13 => data  <= '1'& first_line(0)(87  downto  80);
-       when 14 => data  <= '1'& first_line(0)(79  downto  72); 
-       when 15 => data  <= '1'& first_line(0)(71  downto  64);
-       when 16=> data   <= '1'& first_line(0)(63  downto  56);
-       when 17 => data  <= '1'& first_line(0)(55  downto  48);
-       when 18 => data  <= '1'& first_line(0)(47  downto  40);
-       when 19 => data  <= '1'& first_line(0)(39  downto  32);
-       when 20 => data  <= '1'& first_line(0)(31  downto  24);
-       when 21 => data  <= '1'& first_line(0)(23  downto  16);
-       when 22 => data  <= '1'& first_line(0)(15  downto   8);
-       when 23 => data  <= '1'& first_line(0)(7   downto   0);
+       when 8 => data   <= '1'& first_line(127 downto 120);
+       when 9 => data   <= '1' & first_line(119 downto 112);
+       when 10 => data   <= '1'& first_line(111 downto 104);
+       when 11 => data  <= '1'& first_line(103 downto  96);
+       when 12 => data  <= '1'& first_line(95  downto  88);
+       when 13 => data  <= '1'& first_line(87  downto  80);
+       when 14 => data  <= '1'& first_line(79  downto  72); 
+       when 15 => data  <= '1'& first_line(71  downto  64);
+       when 16=> data   <= '1'& first_line(63  downto  56);
+       when 17 => data  <= '1'& first_line(55  downto  48);
+       when 18 => data  <= '1'& first_line(47  downto  40);
+       when 19 => data  <= '1'& first_line(39  downto  32);
+       when 20 => data  <= '1'& first_line(31  downto  24);
+       when 21 => data  <= '1'& first_line(23  downto  16);
+       when 22 => data  <= '1'& first_line(15  downto   8);
+       when 23 => data  <= '1'& first_line(7   downto   0);
        when 24 => data  <= '0'& X"C0";--Change address to bottom left of screen--
-       when 25 => data  <= '1'& second_line(0)(127 downto 120);
-       when 26 => data  <= '1'& second_line(0)(119 downto 112);
-       when 27 => data  <= '1'& second_line(0)(111 downto 104);
-       when 28 => data  <= '1'& second_line(0)(103 downto  96);
-       when 29 => data  <= '1'& second_line(0)(95  downto  88);
-       when 30 => data  <= '1'& second_line(0)(87  downto  80);
-       when 31 => data  <= '1'& second_line(0)(79  downto  72); 
-       when 32 => data  <= '1'& second_line(0)(71  downto  64);
-       when 33 => data  <= '1'& second_line(0)(63  downto  56);
-       when 34 => data  <= '1'& second_line(0)(55  downto  48);
-       when 35 => data  <= '1'& second_line(0)(47  downto  40);
-       when 36 => data  <= '1'& second_line(0)(39  downto  32);
-       when 37 => data  <= '1'& second_line(0)(31  downto  24);
-       when 38 => data  <= '1'& second_line(0)(23  downto  16);
-       when 39 => data  <= '1'& second_line(0)(15  downto   8);
-       when 40 => data  <= '1'& second_line(0)(7   downto   0);
+       when 25 => data  <= '1'& second_line(127 downto 120);
+       when 26 => data  <= '1'& second_line(119 downto 112);
+       when 27 => data  <= '1'& second_line(111 downto 104);
+       when 28 => data  <= '1'& second_line(103 downto  96);
+       when 29 => data  <= '1'& second_line(95  downto  88);
+       when 30 => data  <= '1'& second_line(87  downto  80);
+       when 31 => data  <= '1'& second_line(79  downto  72); 
+       when 32 => data  <= '1'& second_line(71  downto  64);
+       when 33 => data  <= '1'& second_line(63  downto  56);
+       when 34 => data  <= '1'& second_line(55  downto  48);
+       when 35 => data  <= '1'& second_line(47  downto  40);
+       when 36 => data  <= '1'& second_line(39  downto  32);
+       when 37 => data  <= '1'& second_line(31  downto  24);
+       when 38 => data  <= '1'& second_line(23  downto  16);
+       when 39 => data  <= '1'& second_line(15  downto   8);
+       when 40 => data  <= '1'& second_line(7   downto   0);
        when others => data <= '0'& X"20"; 
    end case;
 end process;

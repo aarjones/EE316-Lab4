@@ -1,0 +1,26 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Thu Mar 10 14:44:05 2022
+# Process ID: 5952
+# Current directory: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent22892 C:\Users\jones\Desktop\EE316-Lab4\VHDL\Full\BetterProject\BetterProject.xpr
+# Log file: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/vivado.log
+# Journal file: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.xpr
+INFO: [Project 1-313] Project file moved from 'C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/Full/BetterProject' since last save.
+Scanning sources...
+Finished scanning sources
+WARNING: [filemgmt 56-2] IPUserFilesDir: Could not find the directory 'C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.ip_user_files', nor could it be found using path 'C:/Users/Cole/Documents/GitHub/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.ip_user_files'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2019.1/data/ip'.
+open_project: Time (s): cpu = 00:00:20 ; elapsed = 00:00:08 . Memory (MB): peak = 857.148 ; gain = 168.395
+update_compile_order -fileset sources_1
+add_files -fileset constrs_1 -norecurse C:/Xilinx/digilent-xdc-master/Cora-Z7-10-Master.xdc
+import_files -fileset constrs_1 C:/Xilinx/digilent-xdc-master/Cora-Z7-10-Master.xdc
+exit
+INFO: [Common 17-206] Exiting Vivado at Thu Mar 10 14:45:14 2022...

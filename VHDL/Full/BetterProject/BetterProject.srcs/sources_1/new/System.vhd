@@ -47,7 +47,7 @@ component ps2_keyboard_to_ascii IS
       ps2_clk    : IN  STD_LOGIC;                     --clock signal from PS2 keyboard
       ps2_data   : IN  STD_LOGIC;                     --data signal from PS2 keyboard
       ascii_new  : OUT STD_LOGIC;                     --output flag indicating new ASCII value
-      ascii_code : OUT STD_LOGIC_VECTOR(6 DOWNTO 0)); --ASCII value
+      ascii_code : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)); --ASCII value
 END component;
 
 component uart_user is
@@ -67,6 +67,7 @@ component uart_user is
 end component;
 
 signal reset_n : std_logic;
+signal ascii_data : std_logic_vector(7 downto 0);
 signal keyboard_data : std_logic_vector(7 downto 0);
 signal keyboard_valid : std_logic;
 signal lcd_data : std_logic_vector(255 downto 0);
@@ -77,6 +78,7 @@ begin
 
 reset_n <= not reset_h;
 lcd_reset <= not(reset_h or uart_valid);
+keyboard_data <= ascii_data;
 
 Inst_LCD: LCD_Transmitter 
 	PORT MAP(
@@ -98,7 +100,7 @@ Inst_keyboard: ps2_keyboard_to_ascii
       ps2_clk    => ps2_clk,                 --clock signal from PS2 keyboard
       ps2_data   => ps2_data,              --data signal from PS2 keyboard
       ascii_new  =>  keyboard_valid,                   --output flag indicating new ASCII value
-      ascii_code =>  keyboard_data                   --ASCII value
+      ascii_code =>  ascii_data                  --ASCII value
     );
 
 Inst_uart: uart_user

@@ -87,8 +87,8 @@ begin
                     
                 when read => 
                     if rx_busy = '0' and rx_error = '0' then
-                        if sel /= 0 then
-                            odataArray(sel*8 downto (sel-1)*8 + 1) <= outData;
+                        if sel /= 1 then
+                            odataArray(sel*8 - 1 downto (sel-1)*8) <= outData;
                             sel <= sel - 1;
                         else
                             sel <= data_length;

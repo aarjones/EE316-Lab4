@@ -39,9 +39,13 @@ public class ComInterface implements Runnable {
         this.port = SerialPort.getCommPort(portIdentifier);
         this.port.setBaudRate(baud);
 
-        //TO BE CHANGED TO SERIAL PORT STREAMS
+        /* ***** FOR JAVA ***** */
         this.inputStream = System.in;
         this.outputStream = System.out;
+
+        /* ***** FOR FPGA ***** */
+        //this.inputStream = this.port.getInputStream();
+        //this.outputStream = this.port.getOutputStream();
     }
 
     public ComInterface() {

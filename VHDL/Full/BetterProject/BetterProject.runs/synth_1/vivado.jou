@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Mon Mar 21 13:06:01 2022
+# Process ID: 9180
+# Current directory: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/synth_1
+# Command line: vivado.exe -log System.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source System.tcl
+# Log file: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/synth_1/System.vds
+# Journal file: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source System.tcl -notrace
