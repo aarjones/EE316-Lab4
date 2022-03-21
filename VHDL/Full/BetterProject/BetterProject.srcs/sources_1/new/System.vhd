@@ -22,7 +22,7 @@ end System;
 
 architecture Behavioral of System is
 
-component LCD_Transmitter IS
+component LCD_Transmitter is
 	GENERIC (
 		CONSTANT input_clock : integer := 125_000_000); 
 	PORT(
@@ -40,14 +40,15 @@ END component;
 
 component ps2_keyboard_to_ascii IS
   GENERIC(
-      clk_freq                  : INTEGER := 50_000_000; --system clock frequency in Hz
-      ps2_debounce_counter_size : INTEGER := 8);         --set such that 2^size/clk_freq = 5us (size = 8 for 50MHz)
+      clk_freq                  : INTEGER := 125_000_000; --system clock frequency in Hz
+      ps2_debounce_counter_size : INTEGER := 9);         --set such that 2^size/clk_freq = 5us (size = 8 for 50MHz)
   PORT(
       clk        : IN  STD_LOGIC;                     --system clock input
       ps2_clk    : IN  STD_LOGIC;                     --clock signal from PS2 keyboard
       ps2_data   : IN  STD_LOGIC;                     --data signal from PS2 keyboard
       ascii_new  : OUT STD_LOGIC;                     --output flag indicating new ASCII value
-      ascii_code : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)); --ASCII value
+      ascii_code : OUT STD_LOGIC_VECTOR(7 DOWNTO 0); --ASCII value
+      ps2_break : out std_logic);
 END component;
 
 component uart_user is
@@ -68,17 +69,32 @@ end component;
 
 signal reset_n : std_logic;
 signal ascii_data : std_logic_vector(7 downto 0);
-signal keyboard_data : std_logic_vector(7 downto 0);
 signal keyboard_valid : std_logic;
 signal lcd_data : std_logic_vector(255 downto 0);
 signal uart_valid : std_logic;
 signal lcd_reset : std_logic;
 
+signal ascii_to_send : std_logic_vector(7 downto 0);
+signal send_uart : std_logic;
+signal keyboard_valid_prev : std_logic;
+
 begin
+
+process(clock) begin  
+    if rising_edge(clock) then
+        if keyboard_valid_prev = '0' and keyboard_valid = '1' then
+            send_uart <= '1';
+        else
+            send_uart <= '0';
+        end if;
+        --send_uart <= (not keyboard_valid_prev) and keyboard_valid;
+        --send_uart <= keyboard_valid_prev and (not keyboard_valid);
+        keyboard_valid <= keyboard_valid_prev;
+    end if;
+end process;
 
 reset_n <= not reset_h;
 lcd_reset <= not(reset_h or uart_valid);
-keyboard_data <= ascii_data;
 
 Inst_LCD: LCD_Transmitter 
 	PORT MAP(
@@ -94,21 +110,21 @@ Inst_LCD: LCD_Transmitter
     );                   
 
 Inst_keyboard: ps2_keyboard_to_ascii
-
   PORT MAP(
       clk        => clock,                    --system clock input
       ps2_clk    => ps2_clk,                 --clock signal from PS2 keyboard
       ps2_data   => ps2_data,              --data signal from PS2 keyboard
-      ascii_new  =>  keyboard_valid,                   --output flag indicating new ASCII value
-      ascii_code =>  ascii_data                  --ASCII value
+      ascii_new  =>  keyboard_valid_prev,                   --output flag indicating new ASCII value
+      ascii_code =>  ascii_data,                  --ASCII value
+      ps2_break => open
     );
 
 Inst_uart: uart_user
     port map(
         clock => clock,
         reset_n => reset_n,
-        inData => keyboard_data,
-        keypressed => keyboard_valid,
+        inData => ascii_data,
+        keypressed => send_uart,
         rx      => rx,
         tx      => tx,    
         odataArray => lcd_data,

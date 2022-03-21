@@ -53,6 +53,7 @@ public class NewGameWindow extends Window {
      */
     public NewGameWindow(String portDescriptor, int baud, HangmanStats gameStats) {
         this.comPort = new ComInterface(portDescriptor, baud);
+        this.comPort.updateWindow(this);
         this.gameStats = gameStats;
 
         //Since this is a new ComInterface, start the ComInterface thread.
@@ -69,6 +70,7 @@ public class NewGameWindow extends Window {
      */
     public NewGameWindow(ComInterface comPort, HangmanStats gameStats, Stage previousStage) {
         this.comPort = comPort;
+        this.comPort.updateWindow(this);
         this.previousStage = previousStage;
         this.gameStats = gameStats;
     }
@@ -152,7 +154,8 @@ public class NewGameWindow extends Window {
     @Override
     public void keyPressed(char c) {
         if(c == 'Y') {
-            this.previousStage.close();
+            if(this.previousStage != null)
+                this.previousStage.close();
             Window window = new MainWindow(this.comPort, this.gameStats);
             this.comPort.updateWindow(window);
             try {

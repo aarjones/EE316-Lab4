@@ -25,14 +25,15 @@ USE ieee.std_logic_1164.all;
 
 ENTITY ps2_keyboard_to_ascii IS
   GENERIC(
-      clk_freq                  : INTEGER := 50_000_000; --system clock frequency in Hz
-      ps2_debounce_counter_size : INTEGER := 8);         --set such that 2^size/clk_freq = 5us (size = 8 for 50MHz)
+      clk_freq                  : INTEGER := 125_000_000; --system clock frequency in Hz
+      ps2_debounce_counter_size : INTEGER := 9);         --set such that 2^size/clk_freq = 5us (size = 8 for 50MHz)
   PORT(
       clk        : IN  STD_LOGIC;                     --system clock input
       ps2_clk    : IN  STD_LOGIC;                     --clock signal from PS2 keyboard
       ps2_data   : IN  STD_LOGIC;                     --data signal from PS2 keyboard
       ascii_new  : OUT STD_LOGIC;                     --output flag indicating new ASCII value
-      ascii_code : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)); --ASCII value
+      ascii_code : OUT STD_LOGIC_VECTOR(7 DOWNTO 0); --ASCII value
+      ps2_break : out std_logic);
 END ps2_keyboard_to_ascii;
 
 ARCHITECTURE behavior OF ps2_keyboard_to_ascii IS
@@ -69,6 +70,8 @@ BEGIN
   ps2_keyboard_0:  ps2_keyboard
     GENERIC MAP(clk_freq => clk_freq, debounce_counter_size => ps2_debounce_counter_size)
     PORT MAP(clk => clk, ps2_clk => ps2_clk, ps2_data => ps2_data, ps2_code_new => ps2_code_new, ps2_code => ps2_code);
+
+    ps2_break <= break;
 
   PROCESS(clk)
   BEGIN

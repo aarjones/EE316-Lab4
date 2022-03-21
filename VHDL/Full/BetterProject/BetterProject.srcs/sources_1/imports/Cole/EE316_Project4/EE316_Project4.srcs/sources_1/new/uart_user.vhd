@@ -23,7 +23,7 @@ architecture Behavioral of uart_user is
 component uart IS
   GENERIC(
     clk_freq  :  INTEGER    := 125_000_000;  --frequency of system clock in Hertz
-    baud_rate :  INTEGER    := 9600;      --data link baud rate in bits/second
+    baud_rate :  INTEGER    := 9_600;      --data link baud rate in bits/second
     os_rate   :  INTEGER    := 16;          --oversampling rate to find center of receive bits (in samples per baud period)
     d_width   :  INTEGER    := 8;           --data bus width
     parity    :  INTEGER    := 0;           --0 for no parity, 1 for parity
@@ -73,16 +73,19 @@ begin
             case(state) is 
                 when init => 
                     data_valid <= '0';
+                    tx_en <= '0';
                     state <= ready;
                     
                 when ready => 
                     data_valid <= '0';
-                    tx_en <= '0';
-                    if rx_busy = '1' then
-                        state <= read;
-                    elsif keypressed = '1' then
+--                    if rx_busy = '1' then
+--                        state <= read;
+--                    end if;
+                    if keypressed = '1' then
                         state <= write;
                         tx_en <= '1';
+                    else
+                        state <= ready;
                     end if;
                     
                 when read => 
@@ -98,10 +101,11 @@ begin
                     end if;
                     
                 when write =>
+                    tx_en <= '0';
                     if tx_busy = '1' then
-                        state <= ready;
+                        state <= write;
                     else
-                        tx_en <= '1';
+                        state <= ready;
                     end if; 
             end case;
         end if;
@@ -134,13 +138,6 @@ end process;
 --end process;
 
 Inst_uart: uart
-  GENERIC MAP(
-    clk_freq  => 125_000_000,  --frequency of system clock in Hertz
-    baud_rate => 9600,      --data link baud rate in bits/second
-    os_rate   => 16,          --oversampling rate to find center of receive bits (in samples per baud period)
-    d_width   => 8,           --data bus width
-    parity    => 0,           --0 for no parity, 1 for parity
-    parity_eo => '0')        --'0' for even, '1' for odd parity
   PORT MAP(
     clk      =>  clock,                           --system clock
     reset_n  =>  reset_n,                           --ascynchronous reset

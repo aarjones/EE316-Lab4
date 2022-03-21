@@ -30,7 +30,7 @@ public abstract class Window extends Application {
             public void run() {
                 try {
                     Clip clip = AudioSystem.getClip();
-                    AudioInputStream inputStream = AudioSystem.getAudioInputStream( new File("./res/symphony5.wav"));
+                    AudioInputStream inputStream = AudioSystem.getAudioInputStream( new File("./res/benny-hill.wav"));
                     clip.open(inputStream);
                     clip.loop(Clip.LOOP_CONTINUOUSLY);
                 } catch (Exception e) {

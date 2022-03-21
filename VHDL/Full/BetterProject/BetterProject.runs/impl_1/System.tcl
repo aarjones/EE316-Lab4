@@ -66,8 +66,8 @@ set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
   set_param chipscope.maxJobs 4
+  set_param xicom.use_bs_reader 1
   create_project -in_memory -part xc7z010clg400-1
-  set_property board_part digilentinc.com:cora-z7-10:part0:1.0 [current_project]
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
   set_property webtalk.parent_dir C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.cache/wt [current_project]

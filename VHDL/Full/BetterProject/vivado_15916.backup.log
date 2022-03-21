@@ -1,0 +1,145 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Mon Mar 21 13:54:30 2022
+# Process ID: 15916
+# Current directory: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent21952 C:\Users\jones\Desktop\EE316-Lab4\VHDL\Full\BetterProject\BetterProject.xpr
+# Log file: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/vivado.log
+# Journal file: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.xpr
+Scanning sources...
+Finished scanning sources
+WARNING: [filemgmt 56-3] IPUserFilesDir: Could not find the directory 'C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.ip_user_files'.
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2019.1/data/ip'.
+open_project: Time (s): cpu = 00:00:29 ; elapsed = 00:00:11 . Memory (MB): peak = 881.250 ; gain = 182.777
+update_compile_order -fileset sources_1
+open_hw
+connect_hw_server
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2019.1
+  **** Build date : May 24 2019 at 15:13:31
+    ** Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+
+open_hw_target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/210370B31E5DA
+open_hw_target: Time (s): cpu = 00:00:06 ; elapsed = 00:00:09 . Memory (MB): peak = 2086.652 ; gain = 1089.879
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+current_hw_device [get_hw_devices xc7z010_1]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7z010_1] 0]
+INFO: [Labtools 27-1435] Device xc7z010 (JTAG device index = 1) is not programmed (DONE status = 0).
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
+INFO: [Labtools 27-1434] Device xc7z010 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
+INFO: [Labtools 27-1434] Device xc7z010 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+open_run synth_1 -name synth_1
+Design is defaulting to impl run constrset: constrs_1
+Design is defaulting to synth run part: xc7z010clg400-1
+INFO: [Device 21-403] Loading part xc7z010clg400-1
+INFO: [Netlist 29-17] Analyzing 38 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2019.1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.srcs/constrs_1/imports/digilent-xdc-master/Cora-Z7-10-Master.xdc]
+Finished Parsing XDC File [C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.srcs/constrs_1/imports/digilent-xdc-master/Cora-Z7-10-Master.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2477.648 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 1 instances were transformed.
+  IOBUF => IOBUF (IBUF, OBUFT): 1 instances
+
+open_run: Time (s): cpu = 00:00:41 ; elapsed = 00:00:35 . Memory (MB): peak = 2658.891 ; gain = 503.059
+show_objects -name NET_ONLY [get_nets -hierarchical -top_net_of_hierarchical_group "*" ]
+show_objects -name NET_ONLY [get_nets -hierarchical -top_net_of_hierarchical_group "*ascii*" ]
+show_objects -name NET_ONLY [get_nets -hierarchical -top_net_of_hierarchical_group "*keypressed*" ]
+WARNING: [Vivado 12-507] No nets matched '*keypressed*'.
+WARNING: [Coretcl 2-1122] No objects found.
+show_objects -name NET_ONLY [get_nets -hierarchical -top_net_of_hierarchical_group "*new*" ]
+show_objects -name NET_ONLY [get_nets -hierarchical -top_net_of_hierarchical_group "*state*" ]
+create_debug_core u_ila_0 ila
+set_property C_DATA_DEPTH 8192 [get_debug_cores u_ila_0]
+set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
+set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
+set_property C_ADV_TRIGGER false [get_debug_cores u_ila_0]
+set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0]
+set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_0]
+set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
+set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
+startgroup 
+set_property C_EN_STRG_QUAL true [get_debug_cores u_ila_0 ]
+set_property C_ADV_TRIGGER true [get_debug_cores u_ila_0 ]
+set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0 ]
+set_property ALL_PROBE_SAME_MU_CNT 4 [get_debug_cores u_ila_0 ]
+endgroup
+connect_debug_port u_ila_0/clk [get_nets [list clock_IBUF_BUFG ]]
+set_property port_width 2 [get_debug_ports u_ila_0/probe0]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
+connect_debug_port u_ila_0/probe0 [get_nets [list {Inst_uart/state__0[0]} {Inst_uart/state__0[1]} ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe1]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
+connect_debug_port u_ila_0/probe1 [get_nets [list Inst_keyboard/ps2_keyboard_0/ascii_new_reg ]]
+save_constraints
+reset_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 2693.793 ; gain = 0.000
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing placer database...
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.120 . Memory (MB): peak = 2696.590 ; gain = 2.797
+[Mon Mar 21 14:04:50 2022] Launched impl_1...
+Run output will be captured here: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/runme.log
+launch_runs: Time (s): cpu = 00:00:06 ; elapsed = 00:00:19 . Memory (MB): peak = 2697.902 ; gain = 4.109
+reset_run impl_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. PID not specified
+
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/synth_1
+
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+WARNING: [Project 1-478] Design 'synth_1' is stale and will not be used when launching 'impl_1'
+[Mon Mar 21 14:13:33 2022] Launched synth_1...
+Run output will be captured here: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/synth_1/runme.log
+[Mon Mar 21 14:13:33 2022] Launched impl_1...
+Run output will be captured here: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/runme.log
+launch_runs: Time (s): cpu = 00:00:02 ; elapsed = 00:00:18 . Memory (MB): peak = 2703.781 ; gain = 0.000
+delete_debug_core [get_debug_cores {u_ila_0 }]
+reset_run impl_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. PID not specified
+
+save_constraints -force
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+WARNING: [Project 1-478] Design 'synth_1' is stale and will not be used when launching 'impl_1'
+[Mon Mar 21 14:32:16 2022] Launched impl_1...
+Run output will be captured here: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/runme.log
+launch_runs: Time (s): cpu = 00:00:01 ; elapsed = 00:00:18 . Memory (MB): peak = 2829.914 ; gain = 0.711
+reset_run impl_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. PID not specified
+
+exit
+INFO: [Common 17-206] Exiting Vivado at Mon Mar 21 14:39:00 2022...

@@ -1,7 +1,7 @@
 Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 ------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2019.1 (win64) Build 2552052 Fri May 24 14:49:42 MDT 2019
-| Date         : Mon Mar 21 13:08:06 2022
+| Date         : Mon Mar 21 17:15:41 2022
 | Host         : AaronThinkPad running 64-bit major release  (build 9200)
 | Command      : report_control_sets -verbose -file System_control_sets_placed.rpt
 | Design       : System
@@ -23,11 +23,11 @@ Table of Contents
 +----------------------------------------------------------+-------+
 |                          Status                          | Count |
 +----------------------------------------------------------+-------+
-| Total control sets                                       |    54 |
-|    Minimum number of control sets                        |    54 |
+| Total control sets                                       |    17 |
+|    Minimum number of control sets                        |    17 |
 |    Addition due to synthesis replication                 |     0 |
 |    Addition due to physical synthesis replication        |     0 |
-| Unused register locations in slices containing registers |    90 |
+| Unused register locations in slices containing registers |    54 |
 +----------------------------------------------------------+-------+
 * Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
 ** Run report_qor_suggestions for automated merging and remapping suggestions
@@ -39,12 +39,12 @@ Table of Contents
 +--------------------+-------+
 |       Fanout       | Count |
 +--------------------+-------+
-| Total control sets |    54 |
+| Total control sets |    17 |
 | >= 0 to < 4        |     0 |
-| >= 4 to < 6        |     4 |
+| >= 4 to < 6        |     2 |
 | >= 6 to < 8        |     6 |
-| >= 8 to < 10       |    38 |
-| >= 10 to < 12      |     2 |
+| >= 8 to < 10       |     2 |
+| >= 10 to < 12      |     3 |
 | >= 12 to < 14      |     1 |
 | >= 14 to < 16      |     0 |
 | >= 16              |     3 |
@@ -58,12 +58,12 @@ Table of Contents
 +--------------+-----------------------+------------------------+-----------------+--------------+
 | Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
 +--------------+-----------------------+------------------------+-----------------+--------------+
-| No           | No                    | No                     |              38 |           15 |
-| No           | No                    | Yes                    |              50 |           18 |
+| No           | No                    | No                     |              40 |           16 |
+| No           | No                    | Yes                    |              37 |           17 |
 | No           | Yes                   | No                     |               9 |            4 |
-| Yes          | No                    | No                     |              57 |           19 |
-| Yes          | No                    | Yes                    |              28 |            8 |
-| Yes          | Yes                   | No                     |             328 |          122 |
+| Yes          | No                    | No                     |              48 |           17 |
+| Yes          | No                    | Yes                    |              11 |            4 |
+| Yes          | Yes                   | No                     |              65 |           20 |
 +--------------+-----------------------+------------------------+-----------------+--------------+
 
 
@@ -73,60 +73,23 @@ Table of Contents
 +----------------------------------------------------+--------------------------------------------------------------------------+------------------------------------------------------------+------------------+----------------+
 |                    Clock Signal                    |                               Enable Signal                              |                      Set/Reset Signal                      | Slice Load Count | Bel Load Count |
 +----------------------------------------------------+--------------------------------------------------------------------------+------------------------------------------------------------+------------------+----------------+
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/os_count0                                            | reset_h_IBUF                                               |                1 |              4 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/rx_count0                                            | reset_h_IBUF                                               |                1 |              4 |
 |  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/tx_count[3]_i_1_n_0                                  | reset_h_IBUF                                               |                1 |              4 |
 |  clock_IBUF_BUFG                                   | Inst_LCD/pause_max_0                                                     |                                                            |                2 |              5 |
-|  clock_IBUF_BUFG                                   | Inst_LCD/i2c_data_1                                                      |                                                            |                3 |              6 |
 |  clock_IBUF_BUFG                                   | Inst_LCD/Inst_i2c_master/addr_rw0                                        |                                                            |                3 |              6 |
-|  clock_IBUF_BUFG                                   | Inst_LCD/byteSel[5]_i_1_n_0                                              | reset_h_IBUF                                               |                1 |              6 |
+|  clock_IBUF_BUFG                                   | Inst_LCD/i2c_data_1                                                      |                                                            |                4 |              6 |
+|  clock_IBUF_BUFG                                   | Inst_LCD/byteSel[5]_i_1_n_0                                              | reset_h_IBUF                                               |                4 |              6 |
 |  clock_IBUF_BUFG                                   | Inst_LCD/Inst_i2c_master/busy1                                           | reset_h_IBUF                                               |                3 |              7 |
+|  clock_IBUF_BUFG                                   | Inst_keyboard/ps2_keyboard_0/E[0]                                        |                                                            |                3 |              7 |
 |  clock_IBUF_BUFG                                   | Inst_keyboard/ascii_code[6]_i_1_n_0                                      |                                                            |                1 |              7 |
-|  clock_IBUF_BUFG                                   | Inst_keyboard/ps2_keyboard_0/E[0]                                        |                                                            |                2 |              7 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[7]                                                 | reset_h_IBUF                                               |                4 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[4]                                                 | reset_h_IBUF                                               |                2 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[8]                                                 | reset_h_IBUF                                               |                3 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[5]                                                 | reset_h_IBUF                                               |                5 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[1]                                                 | reset_h_IBUF                                               |                4 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[2]                                                 | reset_h_IBUF                                               |                3 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[3]                                                 | reset_h_IBUF                                               |                3 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[6]                                                 | reset_h_IBUF                                               |                1 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[0]                                                 | reset_h_IBUF                                               |                2 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[10]                                                | reset_h_IBUF                                               |                2 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[31]                                                | reset_h_IBUF                                               |                2 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[11]                                                | reset_h_IBUF                                               |                4 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[23]                                                | reset_h_IBUF                                               |                4 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[14]                                                | reset_h_IBUF                                               |                3 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[12]                                                | reset_h_IBUF                                               |                2 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[21]                                                | reset_h_IBUF                                               |                1 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[26]                                                | reset_h_IBUF                                               |                5 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[27]                                                | reset_h_IBUF                                               |                3 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[15]                                                | reset_h_IBUF                                               |                4 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[13]                                                | reset_h_IBUF                                               |                5 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[29]                                                | reset_h_IBUF                                               |                2 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[16]                                                | reset_h_IBUF                                               |                4 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[20]                                                | reset_h_IBUF                                               |                5 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[30]                                                | reset_h_IBUF                                               |                2 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[19]                                                | reset_h_IBUF                                               |                5 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[22]                                                | reset_h_IBUF                                               |                1 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[24]                                                | reset_h_IBUF                                               |                4 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[17]                                                | reset_h_IBUF                                               |                3 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[25]                                                | reset_h_IBUF                                               |                4 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[28]                                                | reset_h_IBUF                                               |                3 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[18]                                                | reset_h_IBUF                                               |                3 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_keyboard/ps2_keyboard_0/ps2_code_new0                               |                                                            |                3 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/E[9]                                                 | reset_h_IBUF                                               |                4 |              8 |
-|  clock_IBUF_BUFG                                   | Inst_keyboard/ps2_keyboard_0/debounce_ps2_clk/sel                        | Inst_keyboard/ps2_keyboard_0/debounce_ps2_clk/counter_set  |                2 |              9 |
-|  clock_IBUF_BUFG                                   | Inst_keyboard/ps2_keyboard_0/debounce_ps2_data/counter_out[8]_i_2__0_n_0 | Inst_keyboard/ps2_keyboard_0/debounce_ps2_data/counter_set |                2 |              9 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/rx_error0                                            | reset_h_IBUF                                               |                2 |              9 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/rx_buffer0                                           |                                                            |                3 |              9 |
+|  clock_IBUF_BUFG                                   | Inst_keyboard/ps2_keyboard_0/ps2_code_new0                               |                                                            |                2 |              8 |
 |  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/tx_buffer[9]_i_1_n_0                                 |                                                            |                2 |              9 |
-|  clock_IBUF_BUFG                                   | Inst_uart/Inst_uart/rx_busy_reg_0                                        | reset_h_IBUF                                               |                4 |             10 |
+|  clock_IBUF_BUFG                                   | Inst_keyboard/ps2_keyboard_0/debounce_ps2_clk/sel                        | Inst_keyboard/ps2_keyboard_0/debounce_ps2_clk/counter_set  |                2 |             10 |
+|  clock_IBUF_BUFG                                   | Inst_keyboard/ps2_keyboard_0/debounce_ps2_data/counter_out[9]_i_2__0_n_0 | Inst_keyboard/ps2_keyboard_0/debounce_ps2_data/counter_set |                2 |             10 |
 | ~Inst_keyboard/ps2_keyboard_0/debounce_ps2_clk/CLK |                                                                          |                                                            |                2 |             11 |
-|  clock_IBUF_BUFG                                   | Inst_keyboard/ps2_keyboard_0/count_idle[0]_i_2_n_0                       | Inst_keyboard/ps2_keyboard_0/debounce_ps2_clk/clear        |                3 |             12 |
+|  clock_IBUF_BUFG                                   | Inst_keyboard/ps2_keyboard_0/count_idle[0]_i_2_n_0                       | Inst_keyboard/ps2_keyboard_0/debounce_ps2_clk/clear        |                4 |             13 |
 |  clock_IBUF_BUFG                                   | Inst_LCD/pause_cnt_2                                                     | Inst_LCD/pause_cnt[25]_i_1_n_0                             |                8 |             26 |
-|  clock_IBUF_BUFG                                   |                                                                          |                                                            |               13 |             27 |
-|  clock_IBUF_BUFG                                   |                                                                          | reset_h_IBUF                                               |               22 |             59 |
+|  clock_IBUF_BUFG                                   |                                                                          |                                                            |               14 |             29 |
+|  clock_IBUF_BUFG                                   |                                                                          | reset_h_IBUF                                               |               21 |             46 |
 +----------------------------------------------------+--------------------------------------------------------------------------+------------------------------------------------------------+------------------+----------------+
 
 

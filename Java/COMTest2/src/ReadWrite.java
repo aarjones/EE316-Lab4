@@ -14,7 +14,7 @@ public class ReadWrite {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        SerialPort comPort = SerialPort.getCommPort("COM10");
+        SerialPort comPort = SerialPort.getCommPort("COM18");
         comPort.openPort();
         comPort.addDataListener(new SerialPortDataListener() {
             @Override

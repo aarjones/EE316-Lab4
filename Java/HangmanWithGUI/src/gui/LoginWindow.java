@@ -90,6 +90,7 @@ public class LoginWindow extends Window {
         //Set up the drop-down menu for choosing COM ports.
         this.comPorts = new ComboBox<String>();
         this.comPorts.setItems(FXCollections.observableList(getComPorts()));
+        this.comPorts.setPrefHeight(SCREEN_WIDTH);
 
         //Add it to a VBox
         rows[1].getChildren().add(makeLabel("Select a COM Port:"));

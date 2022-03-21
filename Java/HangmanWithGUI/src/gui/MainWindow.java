@@ -230,8 +230,6 @@ public class MainWindow extends Window {
 
         updateFields();
 
-        playSound();
-
         //Handle closing
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

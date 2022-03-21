@@ -2,6 +2,8 @@
 package comports;
 
 import com.fazecast.jSerialComm.SerialPort;
+import com.fazecast.jSerialComm.SerialPortDataListener;
+import com.fazecast.jSerialComm.SerialPortEvent;
 import gui.Window;
 import javafx.application.Platform;
 
@@ -38,14 +40,15 @@ public class ComInterface implements Runnable {
     public ComInterface(String portIdentifier, int baud) {
         this.port = SerialPort.getCommPort(portIdentifier);
         this.port.setBaudRate(baud);
+        this.port.openPort();
 
         /* ***** FOR JAVA ***** */
-        this.inputStream = System.in;
-        this.outputStream = System.out;
+        //this.inputStream = System.in;
+        //this.outputStream = System.out;
 
         /* ***** FOR FPGA ***** */
-        //this.inputStream = this.port.getInputStream();
-        //this.outputStream = this.port.getOutputStream();
+        this.inputStream = this.port.getInputStream();
+        this.outputStream = this.port.getOutputStream();
     }
 
     public ComInterface() {
@@ -65,7 +68,7 @@ public class ComInterface implements Runnable {
 
         SerialPort[] ports = SerialPort.getCommPorts();
         for(SerialPort port : ports)
-            portNames.add(port.getDescriptivePortName());
+            portNames.add(port.getSystemPortName());
 
         return portNames;
     }
@@ -102,6 +105,22 @@ public class ComInterface implements Runnable {
      */
     @Override
     public void run() {
+        this.port.addDataListener(new SerialPortDataListener() {
+            @Override
+            public int getListeningEvents() {
+                return SerialPort.LISTENING_EVENT_DATA_RECEIVED;
+            }
+
+            @Override
+            public void serialEvent(SerialPortEvent serialPortEvent) {
+                byte[] newData = serialPortEvent.getReceivedData();
+                for (byte currentByte : newData) {
+                    writeData((char)currentByte);
+                }
+            }
+        });
+
+        /*
         Scanner sc = new Scanner(this.inputStream);
 
         while(sc.hasNext()) {
@@ -116,8 +135,19 @@ public class ComInterface implements Runnable {
                 });
             }
         }
-
+        System.out.println("closing scanner");
         sc.close();
+        */
+    }
+
+    private void writeData(char c) {
+        if(Character.isAlphabetic(c))
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    window.keyPressed(Character.toUpperCase(c));
+                }
+            });
     }
 
     /**
