@@ -78,7 +78,7 @@ public class ComInterface implements Runnable {
      *
      * @param data The data to send
      */
-    public void sendData(char[] data) {
+    public synchronized void sendData(char[] data) {
         for(char c : data) {
             try {
                 outputStream.write((byte) c);
@@ -87,8 +87,6 @@ public class ComInterface implements Runnable {
                 System.err.println("IOException in ComInterface's sendData: " + ioe.getMessage());
             }
         }
-
-        System.out.println();
     }
 
     /**
@@ -96,7 +94,7 @@ public class ComInterface implements Runnable {
      *
      * @param window
      */
-    public void updateWindow(Window window) {
+    public synchronized void updateWindow(Window window) {
         this.window = window;
     }
 
@@ -113,9 +111,11 @@ public class ComInterface implements Runnable {
 
             @Override
             public void serialEvent(SerialPortEvent serialPortEvent) {
+                Window oldWindow = window;
                 byte[] newData = serialPortEvent.getReceivedData();
                 for (byte currentByte : newData) {
-                    writeData((char)currentByte);
+                    if(oldWindow == window)
+                        writeData((char)currentByte);
                 }
             }
         });
@@ -140,7 +140,7 @@ public class ComInterface implements Runnable {
         */
     }
 
-    private void writeData(char c) {
+    private synchronized void writeData(char c) {
         if(Character.isAlphabetic(c))
             Platform.runLater(new Runnable() {
                 @Override

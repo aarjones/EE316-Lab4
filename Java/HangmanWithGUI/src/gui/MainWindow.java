@@ -7,6 +7,7 @@ import exceptions.GameOverException;
 import hangman.Hangman;
 import hangman.HangmanStats;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -39,6 +40,10 @@ public class MainWindow extends Window {
     public static final int DEFAULT_HEIGHT = 800;
 
     /* **************** PRIVATE VARS **************** */
+    /**
+     * Has the current game ended?
+     */
+    private boolean gameEnded = false;
     /**
      * The current height of the window.
      */
@@ -228,7 +233,12 @@ public class MainWindow extends Window {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        updateFields();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                updateFields();
+            }
+        });
 
         //Handle closing
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -247,20 +257,27 @@ public class MainWindow extends Window {
      * @param c The letter to guess
      */
     public void keyPressed(char c) {
-        try {
-            this.hangman.checkLetter(c);
-            updateFields();
-        } catch(CharacterAlreadyGuessedException cag) {
-            //ignore this character/do nothing
-        } catch (GameOverException goe) {
-            updateFields();
+        if(this.hangman.getRemainingGuesses() != 0) {
+            try {
+                this.hangman.checkLetter(c);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateFields();
+                    }
+                });
+            } catch (CharacterAlreadyGuessedException cag) {
+                //ignore this character/do nothing
+            } catch (GameOverException goe) {
+                updateFields();
+            }
         }
     }
 
     /**
      * Update all of MainWindow's fields
      */
-     private void updateFields() {
+     private synchronized void updateFields() {
         //Update each TextField
         this.remainingGuesses.setText(Integer.toString(this.hangman.getRemainingGuesses()));
         this.badGuesses.setText(this.hangman.getBadGuesses());
@@ -284,16 +301,33 @@ public class MainWindow extends Window {
                 break;
         }
 
-        //write to LCD
-        LcdController lcd = new LcdController(this.comPort, this.hangman.getCurrentText(), "Guesses: " + this.hangman.getRemainingGuesses());
-        new Thread(lcd).start();
+        if(!this.gameEnded) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    //write to LCD
+                    try {
+                        LcdController lcd = new LcdController(comPort, hangman.getCurrentText(), "Guesses: " + hangman.getRemainingGuesses());
+                        Thread lcdThread = new Thread(lcd);
+                        lcdThread.start();
+                        lcdThread.join();
+                    } catch (InterruptedException ie) {
+                        System.err.println(ie.getMessage());
+                    }
 
-        //Handle if the game is over
-        checkGameOver();
+                    //Handle if the game is over
+                    if(hangman.gameOver() && !gameEnded) {
+                        gameEnded = true;
+                        checkGameOver();
+                    }
+                }
+            });
+        }
      }
 
-     public void checkGameOver() {
+     public synchronized void checkGameOver() {
          if(this.hangman.gameOver()) {
+             this.gameEnded = true;
              this.gameStats.gameEnded(this.hangman.isSolved(), this.hangman.getKey());
              Window window = new NewGameWindow(this.comPort, this.gameStats, this.stage);
              this.comPort.updateWindow(window);

@@ -97,8 +97,8 @@ Inst_i2c_master : i2c_master
 -- This part is editable for custom messages 
 --first_line(0)     <= indata(127 downto 0);
 --second_line(0)    <= indata(255 downto 128);
-first_line <= indata(127 downto 0);
-second_line <= indata(255 downto 128);
+second_line <= indata(127 downto 0);
+first_line <= indata(255 downto 128);
 
  
 
@@ -154,7 +154,7 @@ process(clk)
 	begin
 	   if rising_edge(clk) then
 		if reset_n = '0' then
-			byteSel <= 0;
+			byteSel <= 7;
 			en_cnt <= 0;
 			EN_sig <= '0';
 			nibble_sel <= '0';
@@ -206,7 +206,7 @@ process(clk)
 					case(byteSel) is
 						when 0      => pause_max <= input_clock / 200;
 						when 1      => pause_max <= input_clock / 200;
-						when 39     => pause_max <= input_clock / 5;
+						--when 39     => pause_max <= input_clock / 5;
 						when others => pause_max <= input_clock / 1000;
 					end case;
 				

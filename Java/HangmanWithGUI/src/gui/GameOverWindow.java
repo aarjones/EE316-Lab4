@@ -3,6 +3,7 @@ package gui;
 import comports.ComInterface;
 import comports.LcdController;
 import hangman.HangmanStats;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -103,7 +104,12 @@ public class GameOverWindow extends Window {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        LcdController.updateLCDGameOverWindow(this.comPort, this.gameStats);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                LcdController.updateLCDGameOverWindow(comPort, gameStats);
+            }
+        });
 
         //Close the COM port
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {

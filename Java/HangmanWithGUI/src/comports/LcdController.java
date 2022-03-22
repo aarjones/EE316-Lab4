@@ -5,8 +5,8 @@ import hangman.HangmanStats;
 import java.util.Arrays;
 
 public class LcdController implements Runnable {
+    private static boolean running = false;
     private static final int LCD_SIZE = 16;
-
     /**
      * The ComInterface to which this LCD Controller should write
      */
@@ -61,7 +61,7 @@ public class LcdController implements Runnable {
         updateLCD();
     }
 
-    private void updateLCD() {
+    private synchronized void updateLCD() {
         if(this.topLine.length > 16) {
             for(int i = 0; i <= this.topLine.length - 16; i++) {
                 //set up lines to write on this iteration
@@ -80,17 +80,22 @@ public class LcdController implements Runnable {
                     if(i == 0)
                         Thread.sleep(1500);
                     else
-                        Thread.sleep(250);
+                        Thread.sleep(450);
                 } catch(InterruptedException ie) {
                     System.err.println("Error in updateLCD(): " + ie.getMessage());
                 }
             }
         } else {
             writeOnce(this.topLine, this.bottomLine);
+            try {
+                Thread.sleep(750);
+            } catch(InterruptedException ie) {
+                System.err.println("Error in updateLCD(): " + ie.getMessage());
+            }
         }
     }
 
-    private void writeOnce(char[] top, char[] bottom) {
+    private synchronized void writeOnce(char[] top, char[] bottom) {
         char[] total = new char[32];
         for(int i = 0; i < 31; i++) {
             if(i <= 15)
@@ -105,44 +110,60 @@ public class LcdController implements Runnable {
     /**
      * Sends a message to the LCD for NewGameWindow
      */
-    public static void updateLCDNewGameWindow(ComInterface comPort, HangmanStats gameStats) {
-        new Thread(new Runnable() {
+    public synchronized static void updateLCDNewGameWindow(ComInterface comPort, HangmanStats gameStats) {
+        while(running);
+        running = true;
+        Thread lcdThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 //send win/loss message
                 String top, bottom = "";
-                if(gameStats.isPreviousGameVictory())
-                    top = "Well Done! You have solved " + gameStats.getNumWins() + " puzzles out of " + gameStats.getNumGames();
-                else
-                    top = "Sorry! The correct word was " + gameStats.getPreviousKey() + ". You have solved " + gameStats.getNumWins() + " puzzles out of " + gameStats.getNumGames();
+                LcdController lcd;
 
-                LcdController lcd = new LcdController(comPort, top, bottom);
-                Thread lcdThread = new Thread(lcd);
-                lcdThread.start();
-                try {
-                    lcdThread.join();
-                    Thread.sleep(1000);
-                } catch(InterruptedException ie) {
-                    System.err.println("Error in updateLCD(): " + ie.getMessage());
+                if (gameStats.getNumGames() != 0) {
+                    if (gameStats.isPreviousGameVictory())
+                        top = "Well Done! You have solved " + gameStats.getNumWins() + " puzzles out of " + gameStats.getNumGames();
+                    else
+                        top = "Sorry! The correct word was " + gameStats.getPreviousKey() + ". You have solved " + gameStats.getNumWins() + " puzzles out of " + gameStats.getNumGames();
+
+                    lcd = new LcdController(comPort, top, bottom);
+                    Thread lcdThread = new Thread(lcd);
+                    lcdThread.start();
+                    try {
+                        lcdThread.join();
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ie) {
+                        System.err.println("Error in updateLCD(): " + ie.getMessage());
+                    }
                 }
 
                 //send new game prompt
                 lcd = new LcdController(comPort, "New Game? (y/n)", "");
                 new Thread(lcd).start();
             }
-        }).start();
+        });
+        try {
+            lcdThread.start();
+            lcdThread.join();
+            Thread.sleep(200);
+        } catch(InterruptedException ie) {
+            System.err.println(ie.getMessage());
+        }
+        running = false;
     }
 
     /**
      * Updates the message displayed on the LCD for GameOverWindow
      */
-    public static void updateLCDGameOverWindow(ComInterface comPort, HangmanStats gameStats) {
-        new Thread(new Runnable() {
+    public synchronized static void updateLCDGameOverWindow(ComInterface comPort, HangmanStats gameStats) {
+        while(running);
+        running = true;
+        Thread lcdThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 //send win/loss message
                 String top, bottom = "";
-                top = "Final Score: " + gameStats.getNumWins() + " correct out of " + gameStats.getNumGames();
+                top = "Final Score: " + gameStats.getNumWins() + " correct out of " + gameStats.getNumGames() + " puzzles";
 
                 LcdController lcd = new LcdController(comPort, top, bottom);
                 Thread lcdThread = new Thread(lcd);
@@ -154,10 +175,24 @@ public class LcdController implements Runnable {
                     System.err.println("Error in updateLCD(): " + ie.getMessage());
                 }
 
-                //send new game prompt
+                //send end game prompt
                 lcd = new LcdController(comPort, "GAME OVER", "");
-                new Thread(lcd).start();
+                lcdThread = new Thread(lcd);
+                lcdThread.start();
+                try {
+                    lcdThread.join();
+                } catch(InterruptedException ie) {
+                    System.err.println(ie.getMessage());
+                }
             }
-        }).start();
+        });
+        try {
+            lcdThread.start();
+            lcdThread.join();
+            Thread.sleep(200);
+        } catch(InterruptedException ie) {
+            System.err.println(ie.getMessage());
+        }
+        running = false;
     }
 }

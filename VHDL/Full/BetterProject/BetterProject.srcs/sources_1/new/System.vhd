@@ -99,7 +99,7 @@ lcd_reset <= not(reset_h or uart_valid);
 Inst_LCD: LCD_Transmitter 
 	PORT MAP(
 		clk       => clock,                     --system clock
-		reset_n   => reset_n,
+		reset_n   => lcd_reset,
         indata	  => lcd_data,
         
 --		run_clk   : IN    STD_LOGIC;  --is the clock on

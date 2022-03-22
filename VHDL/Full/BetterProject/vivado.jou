@@ -2,10 +2,10 @@
 # Vivado v2019.1 (64-bit)
 # SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
 # IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
-# Start of session at: Mon Mar 21 15:00:46 2022
-# Process ID: 19844
+# Start of session at: Tue Mar 22 13:24:50 2022
+# Process ID: 14056
 # Current directory: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent20492 C:\Users\jones\Desktop\EE316-Lab4\VHDL\Full\BetterProject\BetterProject.xpr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent13180 C:\Users\jones\Desktop\EE316-Lab4\VHDL\Full\BetterProject\BetterProject.xpr
 # Log file: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/vivado.log
 # Journal file: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject\vivado.jou
 #-----------------------------------------------------------
@@ -23,20 +23,6 @@ set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
 set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
 program_hw_devices [get_hw_devices xc7z010_1]
 refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 14
-wait_on_run impl_1
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 14
-wait_on_run impl_1
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 14
-wait_on_run impl_1
-set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
-program_hw_devices [get_hw_devices xc7z010_1]
-refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
 reset_run impl_1 -prev_step 
 launch_runs impl_1 -to_step write_bitstream -jobs 14
 wait_on_run impl_1
@@ -56,28 +42,7 @@ refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
 reset_run synth_1
 launch_runs impl_1 -to_step write_bitstream -jobs 14
 wait_on_run impl_1
-set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
-program_hw_devices [get_hw_devices xc7z010_1]
-refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
 reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 14
-wait_on_run impl_1
-set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
-program_hw_devices [get_hw_devices xc7z010_1]
-refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 14
-wait_on_run impl_1
-set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
-program_hw_devices [get_hw_devices xc7z010_1]
-refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
-reset_run impl_1 -prev_step 
 launch_runs impl_1 -to_step write_bitstream -jobs 14
 wait_on_run impl_1
 reset_run synth_1
@@ -96,31 +61,65 @@ set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
 set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
 program_hw_devices [get_hw_devices xc7z010_1]
 refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 14
-wait_on_run impl_1
-set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
-program_hw_devices [get_hw_devices xc7z010_1]
-refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 14
-wait_on_run impl_1
 launch_simulation
 source System.tcl
-add_force {/System/clock} -radix hex {1 0ns} {0 4000ps} -repeat_every 8000ps
+add_force {/System/clock} -radix hex {1 0ns} {0 400ps} -repeat_every 8000ps
+add_force {/System/reset_h} -radix hex {1 0ns}
+run 100 us
+add_force {/System/Inst_uart/outData} -radix hex {A 0ns}
+add_force {/System/Inst_uart/outData} -radix hex {41 0ns}
 add_force {/System/reset_h} -radix hex {0 0ns}
-add_force {/System/ascii_data} -radix hex {53 0ns}
-add_force {/System/ascii_to_send} -radix hex {53 0ns}
-add_force {/System/keyboard_valid_prev} -radix hex {0 0ns}
-add_force {/System/keyboard_valid} -radix hex {1 0ns}
-run 1 us
-add_force {/System/keyboard_valid} -radix hex {0 0ns}
-run 400 us
-run 400 us
-run 400 us
-run 400 us
+run 100 us
+add_force {/System/Inst_uart/rx_busy} -radix hex {1 0ns}
+run 100 us
+relaunch_sim
+add_force {/System/clock} -radix hex {1 0ns} {0 4000ps} -repeat_every 8000ps -cancel_after 0
+add_force {/System/clock} -radix hex {1 0ns} {0 4000ps} -repeat_every 8000ps -cancel_after 0
+add_force {/System/clock} -radix hex {1 0ns} {0 4000ps} -repeat_every 8000ps
+add_force {/System/reset_h} -radix hex {1 0ns}
+run 100 us
+add_force {/System/reset_h} -radix hex {0 0ns}
+run 100 ns
+add_force {/System/Inst_uart/outData} -radix hex {41 0ns}
+add_force {/System/Inst_uart/rx_busy_prev} -radix hex {1 0ns}
+run 8 ns
+add_force {/System/Inst_uart/rx_busy_prev} -radix hex {0 0ns}
+run 8 ns
+run 100 ns
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+wait_on_run impl_1
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+wait_on_run impl_1
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+wait_on_run impl_1
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
 set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
 set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
 set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
@@ -129,20 +128,21 @@ refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
 reset_run impl_1 -prev_step 
 launch_runs impl_1 -to_step write_bitstream -jobs 14
 wait_on_run impl_1
-set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
-program_hw_devices [get_hw_devices xc7z010_1]
-refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 14
-wait_on_run impl_1
-set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
-set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
-program_hw_devices [get_hw_devices xc7z010_1]
-refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
 reset_run impl_1 -prev_step 
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 14
+wait_on_run impl_1
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
+reset_run synth_1
 launch_runs impl_1 -to_step write_bitstream -jobs 14
 wait_on_run impl_1
 set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
@@ -158,11 +158,6 @@ set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
 set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
 program_hw_devices [get_hw_devices xc7z010_1]
 refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
-run 400 us
-run 400 us
-run 400 us
-run 400 us
-run 400 us
 set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
 set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
 set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
@@ -178,19 +173,34 @@ set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
 set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
 program_hw_devices [get_hw_devices xc7z010_1]
 refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
-reset_run synth_1
-launch_runs impl_1 -to_step write_bitstream -jobs 14
-wait_on_run impl_1
-open_run impl_1
 set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
 set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
 set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
 program_hw_devices [get_hw_devices xc7z010_1]
 refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
-reset_run synth_1
-launch_runs synth_1 -jobs 14
-wait_on_run synth_1
-launch_runs impl_1 -jobs 14
-wait_on_run impl_1
-launch_runs impl_1 -to_step write_bitstream -jobs 14
-wait_on_run impl_1
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z010_1]
+set_property PROGRAM.FILE {C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.bit} [get_hw_devices xc7z010_1]
+program_hw_devices [get_hw_devices xc7z010_1]
+refresh_hw_device [lindex [get_hw_devices xc7z010_1] 0]
+close_sim

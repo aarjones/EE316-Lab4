@@ -41,15 +41,17 @@ component uart IS
     tx       :  OUT  STD_LOGIC);                            --transmit pin
 END component;
 
-type state_type is (init, ready, read, write);
+type state_type is (init, ready, write);
 signal state : state_type := init;
 
 signal tx_en : std_logic;
 signal tx_busy : std_logic;
 signal rx_busy : std_logic;
+signal rx_busy_prev : std_logic;
 signal rx_error : std_logic;
 signal outData : std_logic_vector(7 downto 0);
 signal sel  : integer range 0 to data_length := data_length;
+signal oData : std_logic_vector(255 downto 0);
 
 
 
@@ -60,14 +62,25 @@ begin
 --rx_busy <= rx_busy;
 --rx_error <= rx_error;
 
+oDataArray <= oData;
 
 process(clock) 
 begin
     if rising_edge(clock) then
+        rx_busy <= rx_busy_prev;
+        if rx_busy_prev = '0' and rx_busy = '1' then
+            oData(255 downto 8) <= oData(247 downto 0);
+            oData(7 downto 0) <= outData;
+            data_valid <= '1';
+        else
+            data_valid <= '0';
+        end if;
+    
+    
         if reset_n = '0' then
             sel <= data_length;
             state <= init;
-            odataArray <= (others => '0');
+            oData <= (x"2020202020202020202020202020202020202020202020202020202020202020");
             data_valid <= '0';
         else
             case(state) is 
@@ -77,7 +90,6 @@ begin
                     state <= ready;
                     
                 when ready => 
-                    data_valid <= '0';
 --                    if rx_busy = '1' then
 --                        state <= read;
 --                    end if;
@@ -88,17 +100,17 @@ begin
                         state <= ready;
                     end if;
                     
-                when read => 
-                    if rx_busy = '0' and rx_error = '0' then
-                        if sel /= 1 then
-                            odataArray(sel*8 - 1 downto (sel-1)*8) <= outData;
-                            sel <= sel - 1;
-                        else
-                            sel <= data_length;
-                            data_valid <= '1';
-                            state <= ready;
-                        end if;
-                    end if;
+--                when read => 
+--                    if rx_busy = '0' and rx_error = '0' then
+--                        if sel /= 1 then
+--                            --odataArray(sel*8 - 1 downto (sel-1)*8) <= outData;
+--                            sel <= sel - 1;
+--                        else
+--                            sel <= data_length;
+--                            data_valid <= '1';
+--                            state <= ready;
+--                        end if;
+--                    end if;
                     
                 when write =>
                     tx_en <= '0';
@@ -144,7 +156,7 @@ Inst_uart: uart
     tx_ena   =>  tx_en,                           --initiate transmission
     tx_data  =>  inData,                           --data to transmit
     rx       =>  rx,                           --receive pin
-    rx_busy  =>  rx_busy,                           --data reception in progress
+    rx_busy  =>  rx_busy_prev,                           --data reception in progress
     rx_error =>  rx_error,                          --start, parity, or stop bit error detected
     rx_data  =>  outData,                           --data received
     tx_busy  =>  tx_busy,                           --transmission in progress

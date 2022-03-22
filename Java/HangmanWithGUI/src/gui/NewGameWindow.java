@@ -3,6 +3,7 @@ package gui;
 import comports.ComInterface;
 import comports.LcdController;
 import hangman.HangmanStats;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -120,7 +121,7 @@ public class NewGameWindow extends Window {
             }
             vBox.getChildren().add(makeLabel("You have solved " + this.gameStats.getNumWins() + " puzzles out of " + this.gameStats.getNumGames()));
         }
-        vBox.getChildren().add(makeLabel("New Game? (Y/n)"));
+        vBox.getChildren().add(makeLabel("New Game? (y/n)"));
 
         //Set up the scene
         Scene scene = new Scene(vBox, DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -133,7 +134,12 @@ public class NewGameWindow extends Window {
         primaryStage.show();
 
         //update the text shown on the LCD
-        LcdController.updateLCDNewGameWindow(this.comPort, this.gameStats);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                LcdController.updateLCDNewGameWindow(comPort, gameStats);
+            }
+        });
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -165,7 +171,8 @@ public class NewGameWindow extends Window {
             }
             this.primaryStage.close();
         } else if(c == 'N') {
-            this.previousStage.close();
+            if(this.previousStage != null)
+                this.previousStage.close();
             GameOverWindow window = new GameOverWindow(this.comPort, this.gameStats);
             this.comPort.updateWindow(window);
             try {

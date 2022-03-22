@@ -2,8 +2,8 @@
 # Vivado v2019.1 (64-bit)
 # SW Build 2552052 on Fri May 24 14:49:42 MDT 2019
 # IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
-# Start of session at: Mon Mar 21 17:15:01 2022
-# Process ID: 20896
+# Start of session at: Tue Mar 22 14:37:11 2022
+# Process ID: 880
 # Current directory: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1
 # Command line: vivado.exe -log System.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source System.tcl -notrace
 # Log file: C:/Users/jones/Desktop/EE316-Lab4/VHDL/Full/BetterProject/BetterProject.runs/impl_1/System.vdi
