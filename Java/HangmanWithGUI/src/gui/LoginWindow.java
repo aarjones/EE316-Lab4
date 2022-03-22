@@ -90,7 +90,7 @@ public class LoginWindow extends Window {
         //Set up the drop-down menu for choosing COM ports.
         this.comPorts = new ComboBox<String>();
         this.comPorts.setItems(FXCollections.observableList(getComPorts()));
-        this.comPorts.setPrefHeight(SCREEN_WIDTH);
+        this.comPorts.setPrefSize(SCREEN_WIDTH, SCREEN_HEIGHT / 4f);
 
         //Add it to a VBox
         rows[1].getChildren().add(makeLabel("Select a COM Port:"));
@@ -102,7 +102,7 @@ public class LoginWindow extends Window {
         rows[2].getChildren().add(this.baudField);
 
         //Set up the badGuesses TextField
-        rows[3].getChildren().add(makeLabel("Maximum Number of Bad Guesses:"));
+        rows[3].getChildren().add(makeLabel("Allowable Bad Guesses:"));
         this.badGuesses = makeTextField("6", true);
         rows[3].getChildren().add(this.badGuesses);
 

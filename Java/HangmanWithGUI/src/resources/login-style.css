@@ -2,18 +2,18 @@
     -fx-font-family: 'monospaced';
     -fx-control-inner-background: #222222;
     -fx-text-fill: white;
-    -fx-font-size: 12pt;
+    -fx-font-size: 16pt;
 }
 
 .label {
     -fx-font-family: 'monospaced';
     -fx-control-inner-background: #222222;
     -fx-text-fill: white;
-    -fx-font-size: 13pt;
+    -fx-font-size: 18pt;
 }
 
 .program-title {
-    -fx-font-size: 24pt;
+    -fx-font-size: 30pt;
     -fx-font-weight: bold;
 }
 
@@ -22,7 +22,7 @@
     -fx-background-color: #222222;
     -fx-control-inner-background: #222222;
     -fx-text-fill: white;
-    -fx-font-size: 12pt;
+    -fx-font-size: 16pt;
 }
 
 .combo-box .cell:selected {
@@ -33,5 +33,5 @@
     -fx-font-family: 'monospaced';
     -fx-background-color: #222222;
     -fx-text-fill: white;
-    -fx-font-size: 12pt;
+    -fx-font-size: 16pt;
 }
