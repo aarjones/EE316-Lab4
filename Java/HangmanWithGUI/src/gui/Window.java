@@ -13,6 +13,8 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
+import java.io.FilenameFilter;
+import java.util.Random;
 
 public abstract class Window extends Application {
     /**
@@ -29,8 +31,19 @@ public abstract class Window extends Application {
         new Thread(new Runnable() {
             public void run() {
                 try {
+                    File fileDirectory = new File("./res/");
+                    String[] files = fileDirectory.list(new FilenameFilter() {
+                        @Override
+                        public boolean accept(File dir, String name) {
+                            return name.matches(".*.wav");
+                        }
+                    });
+                    Random random = new Random();
+                    int index = random.nextInt(files.length);
+
                     Clip clip = AudioSystem.getClip();
-                    AudioInputStream inputStream = AudioSystem.getAudioInputStream( new File("./res/benny-hill.wav"));
+                    //AudioInputStream inputStream = AudioSystem.getAudioInputStream( new File("./res/cantina.wav"));
+                    AudioInputStream inputStream = AudioSystem.getAudioInputStream( new File("./res/" + files[index]));
                     clip.open(inputStream);
                     clip.loop(Clip.LOOP_CONTINUOUSLY);
                 } catch (Exception e) {

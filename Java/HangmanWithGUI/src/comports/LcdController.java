@@ -78,9 +78,9 @@ public class LcdController implements Runnable {
                 //and add a delay
                 try {
                     if(i == 0)
-                        Thread.sleep(1500);
+                        Thread.sleep(1000);
                     else
-                        Thread.sleep(450);
+                        Thread.sleep(350);
                 } catch(InterruptedException ie) {
                     System.err.println("Error in updateLCD(): " + ie.getMessage());
                 }

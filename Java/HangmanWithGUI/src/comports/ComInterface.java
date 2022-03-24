@@ -81,6 +81,7 @@ public class ComInterface implements Runnable {
     public synchronized void sendData(char[] data) {
         for(char c : data) {
             try {
+                if(c == '\0') c = ' ';
                 outputStream.write((byte) c);
                 outputStream.flush();
             } catch(IOException ioe) {
