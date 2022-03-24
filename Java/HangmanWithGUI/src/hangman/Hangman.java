@@ -174,6 +174,11 @@ public class Hangman {
         return this.solved;
     }
 
+    /**
+     * What was the correct word for this game?
+     *
+     * @return this.key
+     */
     public String getKey() {
         return this.key;
     }

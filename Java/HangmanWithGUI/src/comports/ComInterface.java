@@ -141,6 +141,11 @@ public class ComInterface implements Runnable {
         */
     }
 
+    /**
+     * Send a received character to the currently active Window.
+     *
+     * @param c The character just received.
+     */
     private synchronized void writeData(char c) {
         if(Character.isAlphabetic(c))
             Platform.runLater(new Runnable() {

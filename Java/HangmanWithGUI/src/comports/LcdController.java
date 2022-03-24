@@ -5,7 +5,13 @@ import hangman.HangmanStats;
 import java.util.Arrays;
 
 public class LcdController implements Runnable {
+    /**
+     * Is the LcdController currently printing something?
+     */
     private static boolean running = false;
+    /**
+     * How many characters are on one line of the LCD
+     */
     private static final int LCD_SIZE = 16;
     /**
      * The ComInterface to which this LCD Controller should write
@@ -56,11 +62,17 @@ public class LcdController implements Runnable {
         }
     }
 
+    /**
+     * Write to the LCD
+     */
     @Override
     public void run() {
         updateLCD();
     }
 
+    /**
+     * Write to the LCD, implementing scrolling as needed.
+     */
     private synchronized void updateLCD() {
         if(this.topLine.length > 16) {
             for(int i = 0; i <= this.topLine.length - 16; i++) {
@@ -95,6 +107,12 @@ public class LcdController implements Runnable {
         }
     }
 
+    /**
+     * Write a single "frame" to the LCD
+     *
+     * @param top The characters to display on the top row
+     * @param bottom The character to display on the bottom row.
+     */
     private synchronized void writeOnce(char[] top, char[] bottom) {
         char[] total = new char[32];
         for(int i = 0; i < 31; i++) {
