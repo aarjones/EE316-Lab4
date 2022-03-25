@@ -43,12 +43,12 @@ public class ComInterface implements Runnable {
         this.port.openPort();
 
         /* ***** FOR JAVA ***** */
-        //this.inputStream = System.in;
-        //this.outputStream = System.out;
+        this.inputStream = System.in;
+        this.outputStream = System.out;
 
         /* ***** FOR FPGA ***** */
-        this.inputStream = this.port.getInputStream();
-        this.outputStream = this.port.getOutputStream();
+        //this.inputStream = this.port.getInputStream();
+        //this.outputStream = this.port.getOutputStream();
     }
 
     public ComInterface() {

@@ -122,7 +122,7 @@ public class MainWindow extends Window {
         this.hangman = new Hangman(this.gameStats.getNewKey(), 6);
 
         this.comPort.updateWindow(this);
-        new Thread(this.comPort).start();
+        //new Thread(this.comPort).start();
     }
 
     /**
